@@ -48,7 +48,7 @@
 
 	var color = 0;
 	
-	var gameInProgress = true;
+	var gameInProgress = false;
 	var gameOver = false;
 	
 	var goFrame = 0;
@@ -73,15 +73,13 @@ if (scaleFactor > 1) {
     ctx = c.getContext("2d");
 }
 
-	var blocks = new Array();
+	var blocks;
 
 
 	var currentBlock;
 
 
-	for (var i = 0; i < width; i++) {
-		blocks[i] = new Array();
-	}
+	
 
 	function Block() {
 		this.x = 0;
@@ -253,8 +251,14 @@ else {
 		
 	}
 	function startGame() {
+		blocks = new Array();
+		for (var i = 0; i < width; i++) {
+		blocks[i] = new Array();
+		}
+
 		gameInProgress = true;
 		gameOver = false;
+		currentBlock = null;
 		dropBlockLoop = setInterval(dropBlock, 800);
 		
 		spawnRandomBlock();
@@ -273,6 +277,7 @@ else {
 		window.clearInterval(dropBlockLoop);
 		gameInProgress = false;
 		gameOver = true;
+		setInterval(invertBlink, 400);
 	}
 
 	
@@ -283,6 +288,7 @@ var yDown = null;
 
 
 function handleKeyPress(e) {
+	if (gameInProgress) { 
 switch (e.keyCode) {
 			// left
 			case 37:
@@ -300,6 +306,12 @@ switch (e.keyCode) {
 			break;
 
 		}
+	}
+	else {
+		if (e.keyCode == 32) {
+			startGame();
+		}
+	}
 }
 function handleTouchStart(evt) {                                         
     xDown = evt.touches[0].clientX;                                      
