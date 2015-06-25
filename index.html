@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+	@font-face {
+    font-family: 'munroregular';
+    src: url('fonts/munro-webfont.eot');
+    src: url('fonts/munro-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/munro-webfont.woff') format('woff'),
+         url('fonts/munro-webfont.ttf') format('truetype'),
+         url('fonts/munro-webfont.svg#munroregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+		body {
+			background-color: gray;
+			width: 100%;
+			height: 100%;
+
+		}
+		#gameCanvas {
+			border: 3px solid black;
+			position: absolute;
+			width: 400px;
+			height: 600px;
+			left:50%;
+			top:50%;
+			margin-left: -200px;
+			margin-top: -300px;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="gameCanvas" width="400" height="600"></canvas>
+<script>
+	var c = document.getElementById('gameCanvas');
+
+	sizeX = 50;
+	sizeY = sizeX * 0.8;
+	ctx = c.getContext('2d');
+
+	var width = 8;
+	var height = 15;
+	var borderWidth = 5;
+
+	var color = 0;
+	
+	var gameInProgress = true;
+	var gameOver = false;
+	
+	var goFrame = 0;
+function backingScale(context) {
+    if ('devicePixelRatio' in window) {
+        if (window.devicePixelRatio > 1) {
+            return window.devicePixelRatio;
+        }
+    }
+    return 1;
+}
+
+var scaleFactor = backingScale(ctx);
+ 
+if (scaleFactor > 1) {
+    c.width = c.width * scaleFactor;
+    c.height = c.height * scaleFactor;
+    sizeX=sizeX*scaleFactor;
+    sizeY=sizeX*0.8;
+    // update the context for the new canvas scale
+    ctx = c.getContext("2d");
+}
+
+	var blocks = new Array();
+
+
+	var currentBlock;
+
+
+	for (var i = 0; i < width; i++) {
+		blocks[i] = new Array();
+	}
+
+	function Block() {
+		this.x = 0;
+		this.y = 0;
+		this.color = 0;
+		this.value = 0;
+		this.isFacingDown = false;
+	}
+
+
+
+	function random(min, max) {
+		return parseInt(Math.random() * (max - min) + min);
+	}
+	// draw methods
+	function drawLine(x1, y1, x2, y2) {
+		ctx.beginPath();
+      	ctx.moveTo(x1, y1);
+      	ctx.lineTo(x2, y2);
+      	ctx.stroke();
+	}
+	function drawRect(x, y, width, height) {
+		ctx.beginPath();
+      	ctx.moveTo(x, y);
+      	ctx.lineTo(x + width, y);
+      	ctx.lineTo(x + width, y + height);
+      	ctx.lineTo(x, y + height);
+      	ctx.stroke();
+	}
+	function drawTriangle(x, y, block) {
+		ctx.fillStyle = 'hsl(' + (block.color * 36) + ', 100%, 50%)';
+		ctx.beginPath();
+    	if (block.isFacingDown) {
+    		ctx.moveTo(x, y);
+    		ctx.lineTo(x + sizeX, y);
+   			ctx.lineTo(x + sizeX / 2, y + sizeY);
+    	} else {
+    		ctx.moveTo(x, y + sizeY);
+    		ctx.lineTo(x + sizeX, y + sizeY);
+    		ctx.lineTo(x + sizeX / 2, y);
+    	}
+    	ctx.fill();
+    	ctx.font = "bold "+(16*scaleFactor)+"px Arial";
+    	if (block.color < 6) {
+    		ctx.fillStyle = '#000';
+    	} else {
+    		ctx.fillStyle = '#fff';
+    	}
+    	if (block.isFacingDown) {
+    		ctx.fillText(block.value, x + sizeX / 2 - ctx.measureText(block.value).width / 2, y + sizeY / 2);
+    	} else {
+    		ctx.fillText(block.value, x + sizeX / 2 - ctx.measureText(block.value).width / 2, y + parseInt(sizeY * 0.8));
+    	}
+	}
+	function drawBoard() {
+		ctx.strokeStyle = '#000';
+		for (var x = 0; x < width; x++) {
+			drawLine(x * sizeX, 0, x * sizeX, c.height);
+		}
+		for (var y = 0; y < height; y++) {
+			drawLine(0, y * sizeY, c.width, y * sizeY);
+		}
+	}
+	function drawGameOver(t) {
+			var goString = "GAME";
+
+	if (goFrame < (c.width / 2 )) {
+		ctx.fillStyle = 'black';
+		ctx.fillRect(0,0,(sizeX*width), (sizeY*height));
+		ctx.fillStyle = "red";
+		ctx.strokeStyle = "white";
+    	ctx.font = "bold "+(48*scaleFactor)+"px munroregular";
+		var dist = (sizeX*width) / 2;
+		dist = dist/100*t +100;
+		
+		console.log('game at: ' + dist);
+		
+		ctx.fillText('GAME', dist, (height*sizeY) / 2);
+		
+		ctx.fillText('OVER',c.width-dist, (height*sizeY)/2)
+		
+		goFrame=goFrame+20;
+		} else {
+		goFrame = 0;
+		gameOver = false;
+		}
+	}
+	function gameTick() {
+		if (gameInProgress) {
+		ctx.fillStyle = '#fff';
+		ctx.fillRect(0, 0, c.width, c.height);
+		drawBoard();
+		for (var x = 0; x < blocks.length; x++) {
+			for (var y = 0; y < blocks[x].length; y++) {
+				if (blocks[x][y] != null) {
+				blocks[x][y].isFacingDown = true;
+				drawTriangle(x * sizeX, y * sizeY, blocks[x][y]);
+			}
+			}
+		}
+		
+		} else if (gameOver) {
+			gameOverTick(goFrame);
+			
+		}
+	}
+	function spawnRandomBlock() {
+		var x = random(0, width);
+		currentBlock = new Block();
+		currentBlock.color = random(1, 9);
+		currentBlock.value = random(1, 9);
+		currentBlock.x = x;
+		currentBlock.y = 0;
+		blocks[x][0] = currentBlock;
+
+	}
+
+
+	function dropBlock() {
+		
+		if (currentBlock) {
+			if (blocks[currentBlock.x][currentBlock.y+1] == undefined && currentBlock.y+1 < height) {
+				blocks[currentBlock.x][currentBlock.y] = null;
+				blocks[currentBlock.x][currentBlock.y+1] = currentBlock;
+				currentBlock.y++;
+				return true;
+			} else {
+				if (currentBlock.y == 0) {
+					doGameOver();
+				} else {
+				console.log('Invalidating currentBlock');
+				currentBlock == null;
+				console.log('Spawning new block');
+				spawnRandomBlock();
+
+				return false;
+				}
+			}
+		}
+
+	}
+
+	function fullDropBlock() {
+		while(dropBlock() == true) {
+			console.log('drop');
+		}
+		
+	}
+	function startGame() {
+		gameInProgress = true;
+		gameOver = false;
+		dropBlockLoop = setInterval(dropBlock, 800);
+		
+		spawnRandomBlock();
+		document.addEventListener('touchstart', handleTouchStart, false);        
+		document.addEventListener('touchmove', handleTouchMove, false);
+
+	}
+	function initGame() {
+			loop = setInterval(gameTick, 16);
+
+	}
+
+
+	function doGameOver() {
+
+		window.clearInterval(dropBlockLoop);
+		gameInProgress = false;
+		gameOver = true;
+	}
+
+	
+	document.addEventListener('keydown', handleKeyPress);
+
+var xDown = null;                                                        
+var yDown = null;                                                        
+
+
+function handleKeyPress(e) {
+switch (e.keyCode) {
+			// left
+			case 37:
+				moveLeft();
+			break;
+			case 32:
+				fullDropBlock();
+			break;
+			// right
+			case 39:
+				moveRight();
+			break;
+			default:
+
+			break;
+
+		}
+}
+function handleTouchStart(evt) {                                         
+    xDown = evt.touches[0].clientX;                                      
+    yDown = evt.touches[0].clientY; 
+    evt.preventDefault();                                     
+};                                                
+function handleTouchMove(evt) {
+    if ( ! xDown || ! yDown ) {
+        return;
+    }
+
+    var xUp = evt.touches[0].clientX;                                    
+    var yUp = evt.touches[0].clientY;
+
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+
+    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+        if ( xDiff > 0 ) {
+            /* left swipe */ 
+            moveLeft();
+        } else {
+            /* right swipe */
+            moveRight();
+        }                       
+    } else {
+        if ( yDiff > 0 ) {
+            /* up swipe */ 
+            moveUp();
+        } else { 
+            /* down swipe */
+            moveDown();
+        }                                                                 
+    }
+    /* reset values */
+    xDown = null;
+    yDown = null;                                          
+};
+function moveDown() {
+	
+}
+function moveUp() {
+	
+}
+function moveLeft() {
+if (currentBlock.x>0 && blocks[currentBlock.x-1][currentBlock.y] == null) {
+blocks[currentBlock.x][currentBlock.y] = null;
+blocks[currentBlock.x-1][currentBlock.y] = currentBlock;
+currentBlock.x--;
+}
+}
+function moveRight() {
+if (currentBlock.x<width-1 && blocks[currentBlock.x+1][currentBlock.y] == null) {
+blocks[currentBlock.x][currentBlock.y] = null;
+blocks[currentBlock.x+1][currentBlock.y] = currentBlock;
+currentBlock.x++;
+}
+}
+initGame();
+</script>
+</body>
+</html>
