@@ -211,8 +211,8 @@ else {
 	function spawnRandomBlock() {
 		var x = random(0, width);
 		currentBlock = new Block();
-		currentBlock.color = random(1, 9);
-		currentBlock.value = random(1, 9);
+		currentBlock.color = random(1, 10);
+		currentBlock.value = random(1, 10);
 		currentBlock.x = x;
 		currentBlock.y = 0;
 		blocks[x][0] = currentBlock;
@@ -422,7 +422,7 @@ var notes = [
 				[52, 9.0, 0.3],
 				[-100, 9.3, 0.3]
 				];
-var notesKickDrum = [
+var notesDrums = [
 				[13, 0, 0.15],
 				[25,0.6, 0.15],
 				[13,1.2, 0.15],
@@ -466,8 +466,8 @@ function playOneTime() {
 	for (var i=0; i<notes.length; i++) {
 		scheduleKey(notes[i][0],'square', notes[i][1], notes[i][2]);
 	}
-	for (var j=0; j<notesKickDrum.length; j++) {
-		scheduleKey(notesKickDrum[j][0],'sawtooth', notesKickDrum[j][1], notesKickDrum[j][2]);
+	for (var j=0; j<notesDrums.length; j++) {
+		scheduleKey(notesDrums[j][0],'sawtooth', notesDrums[j][1], notesDrums[j][2]);
 	}
 	for (var k=0; k<notesBass.length; k++) {
 		scheduleKey(notesBass[k][0],'sine', notesBass[k][1], notesBass[k][2]);
