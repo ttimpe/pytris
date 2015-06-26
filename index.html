@@ -281,7 +281,7 @@ else {
 	}
 
 	
-	document.addEventListener('keydown', handleKeyPress);
+document.addEventListener('keydown', handleKeyPress);
 
 var xDown = null;                                                        
 var yDown = null;                                                        
@@ -370,7 +370,45 @@ blocks[currentBlock.x+1][currentBlock.y] = currentBlock;
 currentBlock.x++;
 }
 }
+
+
+var ac = new AudioContext();
+	var gainNode = ac.createGain();
+	gainNode.gain.value = 0.03;
+	gainNode.connect(ac.destination);
+
+function playFreq(freq,type,startTime, length) {
+	var osc = ac.createOscillator();
+	osc.type = type;
+	osc.frequency.value = freq;
+	osc.connect(gainNode);
+
+	console.log('scheduling at ' + ac.currentTime + startTime);
+	osc.start(ac.currentTime + startTime);
+	osc.stop(ac.currentTime + startTime + length);
+
+
+}
+var bpm = 120;
+var notes = [[48, 0, 0.5], [50, 0.7, 0.5], [52, 1.4, 0.5], [53, 2.1, 0.5], [55, 2.8, 0.7], [55, 4, 0.7],[57, 5, 0.5],[57, 5.7, 0.5], [57, 6.4, 0.5], [57,7.1, 0.5], [55, 7.8, 0.7]];
+
+function getKeyFreq(key) {
+	var tot = 1.0594630943592953;
+	return Math.pow(tot, key-49) * 440;
+}
+function scheduleKey(tone, startTime,length) {
+	playFreq(getKeyFreq(tone), 'square', startTime, length);
+}
+
+
 initGame();
+
+function playMusic() {
+
+	for (var i=0; i<notes.length; i++) {
+		scheduleKey(notes[i][0], notes[i][1], notes[i][2]);
+	}
+}
 </script>
 </body>
 </html>
