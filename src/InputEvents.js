@@ -30,6 +30,8 @@ switch (e.keyCode) {
 		}
 	} else if (menuActive != -1) {
         switch (e.keyCode) {
+            case 32:
+            menuAction();
             case 38:
             menuUp();
             break;
@@ -103,7 +105,11 @@ function menuUp () {
     }
 }
 function menuDown() {
-    if (selectedMenuItem < 4) {
+    if (selectedMenuItem < menus[menuActive].items.length-1) {
         selectedMenuItem++;
     }
+}
+
+function menuAction() {
+    menus[menuActive].items[selectedMenuItem].listener();
 }

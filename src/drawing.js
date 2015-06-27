@@ -77,13 +77,13 @@
 		ctx.fillStyle = 'black';
 		ctx.fillRect(0,0,(sizeX*width), (sizeY*height));
 
-		var menuOptions = ['START GAME', 'HIGHSCORE', 'OPTIONS', 'CREDITS'];
+		var theMenu = menus[menuActive];
 		
 		var menuY = c.width * 0.6;
 		ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
 
-		for (var i=0; i<menuOptions.length; i++) {
-			var y =  menuY + (i*56);
+		for (var i=0; i<theMenu.items.length; i++) {
+			var y =  menuY + (i*88);
 			console.log(y);
 			if (i == selectedMenuItem) {
 				ctx.fillStyle = "lightblue";
@@ -92,7 +92,7 @@
 
 			}
 
-			ctx.fillText(menuOptions[i], (c.width - ctx.measureText(menuOptions[i]).width) / 2,y);
+			ctx.fillText(theMenu.items[i].title, (c.width - ctx.measureText(theMenu.items[i].title).width) / 2,y);
 		}
 	}
 
