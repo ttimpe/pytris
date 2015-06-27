@@ -32,6 +32,10 @@ switch (e.keyCode) {
         switch (e.keyCode) {
             case 32:
             menuAction();
+            break;
+            case 13:
+            menuAction();
+            break;
             case 38:
             menuUp();
             break;

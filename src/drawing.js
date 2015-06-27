@@ -86,9 +86,9 @@
 			var y =  menuY + (i*88);
 			console.log(y);
 			if (i == selectedMenuItem) {
-				ctx.fillStyle = "lightblue";
+				ctx.fillStyle = "#06a4ff";
 			} else {
-				ctx.fillStyle = 'blue';
+				ctx.fillStyle = '#0036ff';
 
 			}
 
