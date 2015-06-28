@@ -94,7 +94,7 @@ if (menuActive != -1) {
 }
 }
 function pressSpace() {
-    if (gameInProgress == false && menuActive == -1) {
+    if (gameInProgress == false && menuActive == -1 && highscoreActive == false) {
         startGame();
     } else if (menuActive != -1) {
         menuAction();
