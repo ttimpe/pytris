@@ -81,7 +81,7 @@
 		ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
 
 		for (var i=0; i<theMenu.items.length; i++) {
-			var y =  menuY + (i*88);
+			var y =  menuY + (i*44*scaleFactor);
 			log('Drawing MenuItem ' + i + ' at y: ' + y);
 			if (i == selectedMenuItem) {
 				ctx.fillStyle = "#06a4ff";
@@ -89,7 +89,6 @@
 				ctx.fillStyle = '#0036ff';
 
 			}
-
 			ctx.fillText(theMenu.items[i].title, (c.width - ctx.measureText(theMenu.items[i].title).width) / 2,y);
 		}
 	}
