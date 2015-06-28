@@ -7,5 +7,5 @@ options = {
 	"subtraction": true,
 	"multiplication": true,
 	"division": true,
-	"debug": true
+	"debug": false
 };
