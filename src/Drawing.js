@@ -13,7 +13,7 @@
   		}
   		delta = (new Date().getTime() - lastCalledTime)/1000;
   		lastCalledTime = Date.now();
-  		fps = parseInt(1/delta);
+  		fps = parseInt (1/delta);
   		ctx.fillStyle = 'red';
   				ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
 
@@ -69,8 +69,11 @@
 		ctx.fillText('GAME', goFrame-(ctx.measureText('GAME').width+20), (height*sizeY) / 2);
 		var len = (c.width/1.3) + ctx.measureText('OVER').width+20;
 		ctx.fillText('OVER', len - goFrame, (height*sizeY) / 2);
+
 		goFrame=goFrame+5;
 		}
+				drawMessage('Press [SPACE] to play again');
+
 	}
 
 	function drawMenu() {
@@ -87,10 +90,28 @@
 		}
 	}
 
-	function drawPlayAgainMessage() {
+	function drawMessage(message) {
 		ctx.fillStyle = "white";
-		var message = "Press [SPACE] or tap to play again"
     	ctx.font = "bold "+(20*scaleFactor)+"px munroregular";
     	ctx.fillStyle = blinky ? "white" : "black";
 		ctx.fillText(message, c.width / 2 - ctx.measureText(message).width / 2, (height*sizeY) * 0.8);
+	}
+
+
+
+	function drawHighscore() {
+		ctx.fillStyle = 'black';
+		ctx.fillRect(0,0,(sizeX*width), (sizeY*height));
+		ctx.fillStyle = 'yellow';
+		ctx.fillText('HIGHSCORE', (c.width - ctx.measureText('HIGHSCORE').width)/2, 100);
+		ctx.fillStyle = 'white';
+
+		ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
+		for (var i=0; i<highscores.length; i++) {
+
+			ctx.fillText(highscores[i].name, c.width*0.2, (c.height*0.3) + (i*40));
+			ctx.fillText(highscores[i].score, c.width - (c.width*0.3), (c.height*0.3) + (i*40));
+
+		}
+		drawMessage("Press [ESC] to return");
 	}

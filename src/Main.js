@@ -18,12 +18,13 @@ var fps;
 		
 		} else if (gameOver) {
 			drawGameOver(goFrame);
-			drawPlayAgainMessage();
-
 		} else if (menuActive != -1) {
 			drawMenu();
+		} else if (highscoreActive) {
+			drawHighscore();
+
 		}
-				drawFPS();
+		drawFPS();
 
 	}
 	
@@ -32,7 +33,6 @@ var fps;
 		for (var i = 0; i < width; i++) {
 		blocks[i] = new Array();
 		}
-		clearInterval(blinkTimer);
 
 		gameInProgress = true;
 		gameOver = false;
@@ -66,8 +66,11 @@ var fps;
 	menuActive = 0;
 	menus = Array();
  	scaleFactor = backingScale(ctx);
- 	blinkTimer = null;
- 	introMusicTimer = null; 
+ 	blinkTimer = setInterval(invertBlink, 600);
+ 	introMusicTimer = null;
+ 	highscoreActive = false;
+ 	highscores = new Array();
+
  
 if (scaleFactor > 1) {
     c.width = c.width * scaleFactor;
@@ -83,17 +86,19 @@ if (scaleFactor > 1) {
 
 	}
 
+	function stopGame() {
+		stopAllMusic();
+		window.clearInterval(dropBlockLoop);
+		gameInProgress = false;
+	}
+
 	var animation = function() {
 		animationFrame = requestAnimationFrame(animation);
 		gameTick();
 	}
 	function doGameOver() {
-
-		window.clearInterval(dropBlockLoop);
-		gameInProgress = false;
+		stopGame();
 		gameOver = true;
-		blinkTimer = setInterval(invertBlink, 600);
-		stopAllMusic();
 		playSoundEffect(1);
 	}
 

@@ -11,7 +11,8 @@ function MenuItem(title, listener) {
 // dummy funcs
 
 function showHighscore() {
-
+	highscoreActive = true;
+	menuActive = -1;
 }
 function showOptions() {
 

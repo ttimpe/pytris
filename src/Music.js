@@ -140,6 +140,7 @@ function playIntroMusic() {
 }
 function playIntroMusicOneTime() {
 		for (var i=0; i<notesIntro.length; i++) {
+		scheduleKey(notesIntro[i][0]-21,'sine', notesIntro[i][1], notesIntro[i][2]);
 		scheduleKey(notesIntro[i][0],'sawtooth', notesIntro[i][1], notesIntro[i][2]);
 		scheduleKey(notesIntro[i][0],'square', notesIntro[i][1], notesIntro[i][2]);
 
@@ -191,6 +192,14 @@ function playSoundEffect(i) {
 		case 4:
 			var osc = ac.createOscillator();
 			osc.frequency.value = 330;
+			osc.type='sawtooth';
+			osc.connect(fxGain);
+			osc.start();
+			osc.stop(ac.currentTime + 0.1);
+		break;
+		case 5:
+			var osc = ac.createOscillator();
+			osc.frequency.value = 165;
 			osc.type='sawtooth';
 			osc.connect(fxGain);
 			osc.start();

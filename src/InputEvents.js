@@ -25,6 +25,9 @@ switch (e.keyCode) {
             case 13:
                 pressEnter();
             break;
+            case 27:
+                pressESC();
+                break;
 			default:
 
 			break;
@@ -104,6 +107,20 @@ function pressEnter() {
 
 }
 
+function pressESC() {
+    if (highscoreActive) {
+        highscoreActive = false;
+        menuActive = 0;
+        playSoundEffect(5);
+    } else if (gameInProgress || gameOver) {
+        stopGame();
+        gameOver = false;
+        playIntroMusic();
+        menuActive = 0;
+        playSoundEffect(5);
+
+    }
+}
 
 function moveDown() {
 	
