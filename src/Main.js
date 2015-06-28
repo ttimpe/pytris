@@ -74,11 +74,15 @@ if (scaleFactor > 1) {
     ctx = c.getContext("2d");
 }
 
-	loop = setInterval(gameTick, 16);
-
+	//loop = setInterval(gameTick, 16);
+	loop = requestAnimationFrame(animation);
 
 	}
 
+	var animation = function() {
+		animationFrame = requestAnimationFrame(animation);
+		gameTick();
+	}
 	function doGameOver() {
 
 		window.clearInterval(dropBlockLoop);
