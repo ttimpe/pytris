@@ -1,6 +1,5 @@
 // music.js
- window.AudioContext = window.AudioContext ||
-                        window.webkitAudioContext
+ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 var ac = new AudioContext();
 	var leadGain = ac.createGain();
