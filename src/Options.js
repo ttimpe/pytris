@@ -7,5 +7,6 @@ options = {
 	"subtraction": true,
 	"multiplication": true,
 	"division": true,
-	"debug": false
+	"debug": false,
+	"showFPS": true
 };

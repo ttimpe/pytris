@@ -1,9 +1,23 @@
 // draw methods
+
 	function drawLine(x1, y1, x2, y2) {
 		ctx.beginPath();
       	ctx.moveTo(x1, y1);
       	ctx.lineTo(x2, y2);
       	ctx.stroke();
+	}
+	function drawFPS() {
+		if(!lastCalledTime) {
+     		lastCalledTime = Date.now();
+     		fps = 0;
+  		}
+  		delta = (new Date().getTime() - lastCalledTime)/1000;
+  		lastCalledTime = Date.now();
+  		fps = Math.round(1/delta);
+  		ctx.fillStyle = 'red';
+  				ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
+
+  		ctx.fillText(fps, (c.width*scaleFactor) - ctx.measureText(fps).width, 30);
 	}
 	function drawRect(x, y, width, height) {
 		ctx.beginPath();

@@ -1,4 +1,6 @@
 // Main.js
+var lastCalledTime;
+var fps;
 
 	function gameTick() {
 		if (gameInProgress) {
@@ -21,6 +23,8 @@
 		} else if (menuActive != -1) {
 			drawMenu();
 		}
+				drawFPS();
+
 	}
 	
 	function startGame() {
