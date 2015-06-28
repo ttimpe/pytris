@@ -3,8 +3,11 @@
 
 var ac = new AudioContext();
 	var leadGain = ac.createGain();
-	leadGain.gain.value = 0.03;
+	leadGain.gain.value = options.musicVolume;
 	leadGain.connect(ac.destination);
+	var fxGain = ac.createGain();
+	fxGain.gain.value=options.fxVolume;
+	fxGain.connect(ac.destination);
 var musicTimer;
 function playFreq(freq,type,startTime, length) {
 	var osc = ac.createOscillator();
@@ -76,8 +79,28 @@ var notesBass = [
 				[25, 4.8, 1.8],
 				[21, 6.6, 0.6],
 				[23, 7.2, 2.4],
-
 				];
+
+
+var notesIntro = [
+				 [25, 0, 0.3],
+				 [25, 0.3, 0.3],
+				 [25, 0.6, 0.3],
+				 [25, 0.9, 0.3],
+				 [25, 1.2, 0.3],
+				 [28,1.5,0.3],
+				 [28, 1.8, 0.3],
+				 [28, 2.1, 0.3],
+				 [27, 2.4, 0.3],
+				 [27, 2.7, 0.3],
+				 [27, 3, 0.3],
+				 [27, 3.3, 0.3],
+				 [27, 3.6, 0.3],
+				 [24, 3.9, 0.3],
+				 [24, 4.2, 0.3],
+				 [24, 4.5, 0.3],
+				 ];
+
 
 function getKeyFreq(key) {
 	var tot = 1.0594630943592953;
@@ -89,9 +112,11 @@ function scheduleKey(tone,wave, startTime,length) {
 
 
 function playOneTime() {
+	
 	for (var i=0; i<notes.length; i++) {
 		scheduleKey(notes[i][0],'square', notes[i][1], notes[i][2]);
 	}
+	
 	for (var j=0; j<notesDrums.length; j++) {
 		scheduleKey(notesDrums[j][0],'sine', notesDrums[j][1], notesDrums[j][2]);
 	}
@@ -100,7 +125,8 @@ function playOneTime() {
 	}
 }
 function startMusic() {
-	leadGain.gain.value = 0.03;
+	window.clearInterval(introMusicTimer);
+	leadGain.gain.value = options.musicVolume;
 	var fullLength = notes[notes.length-1][1] + notes[notes.length-1][2];
 	playOneTime();
 	musicTimer = setInterval(playOneTime, fullLength*1000);
@@ -109,6 +135,19 @@ function stopMusic() {
 	leadGain.gain.value = 0;
 	window.clearInterval(musicTimer);
 }
+
+function playIntroMusic() {
+	var fullLength = notesIntro[notesIntro.length-1][1] + notesIntro[notesIntro.length-1][2];
+	playIntroMusicOneTime();
+	introMusicTimer = setInterval(playIntroMusicOneTime, fullLength*1000);
+}
+function playIntroMusicOneTime() {
+		for (var i=0; i<notesIntro.length; i++) {
+		scheduleKey(notesIntro[i][0],'sawtooth', notesIntro[i][1], notesIntro[i][2]);
+		scheduleKey(notesIntro[i][0],'square', notesIntro[i][1], notesIntro[i][2]);
+
+	}
+}
 function playSoundEffect(i) {
 	switch (i) {
 		// block drop
@@ -116,23 +155,50 @@ function playSoundEffect(i) {
 			var osc = ac.createOscillator();
 			osc.frequency.value = 520;
 			osc.type='square';
-			osc.connect(ac.destination);
+			osc.connect(fxGain);
 			osc.start();
 			osc.stop(ac.currentTime + 0.1);
 		break;
+		// game over
 		case 1:
-			var fullLength = 2;
-			var step = 0;
-			for (var i = 1200; i=600; i--) {
+			for (var i = 0; i<10; i++) {
 				var osc = ac.createOscillator();
-				osc.frequency.value = i;
+				osc.frequency.value = 440 - (i*20);
 				osc.type='square';
-				osc.connect(ac.destination);
-				osc.start(ac.currentTime + fullLength - step);
-				osc.stop(ac.currentTime + fullLength - step + 0.15); 
-				step++;
+				osc.connect(fxGain);
+				osc.start(ac.currentTime + i*0.11);
+				if (i == 9) {
+				osc.stop(ac.currentTime + (i*0.11) + 0.3); 
+
+				} else {
+				osc.stop(ac.currentTime + (i*0.11) + 0.11); 
+			}
 			}
 		break;
-
+		case 2:
+			var osc = ac.createOscillator();
+			osc.frequency.value = 165;
+			osc.type='sawtooth';
+			osc.connect(fxGain);
+			osc.start();
+			osc.stop(ac.currentTime + 0.1);
+		break;
+		case 3:
+			var osc = ac.createOscillator();
+			osc.frequency.value = 220;
+			osc.type='sawtooth';
+			osc.connect(fxGain);
+			osc.start();
+			osc.stop(ac.currentTime + 0.1);
+		break;
+		case 4:
+			var osc = ac.createOscillator();
+			osc.frequency.value = 330;
+			osc.type='sawtooth';
+			osc.connect(fxGain);
+			osc.start();
+			osc.stop(ac.currentTime + 0.1);
+		break;
 	}
 }
+playIntroMusic();

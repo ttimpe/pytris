@@ -5,45 +5,32 @@ document.addEventListener('keydown', handleKeyPress);
 
 
 function handleKeyPress(e) {
-	if (gameInProgress) { 
 switch (e.keyCode) {
 			// left
 			case 37:
-				moveLeft();
+				pressLeft();
 			break;
+            case 38:
+                pressUp();
+                break;
 			case 32:
-				fullDropBlock();
+				pressSpace();
 			break;
 			// right
 			case 39:
-				moveRight();
+				pressRight();
 			break;
+            case 40:
+                pressDown();
+            case 13:
+                pressEnter();
+            break;
 			default:
 
 			break;
 
-		}
 	}
-	else if (gameOver) {
-		if (e.keyCode == 32) {
-			startGame();
-		}
-	} else if (menuActive != -1) {
-        switch (e.keyCode) {
-            case 32:
-            menuAction();
-            break;
-            case 13:
-            menuAction();
-            break;
-            case 38:
-            menuUp();
-            break;
-            case 40:
-            menuDown();
-            break;
-        }
-    }
+	
 }
 function handleTouchStart(evt) {                                         
     xDown = evt.touches[0].clientX;                                      
@@ -64,24 +51,60 @@ function handleTouchMove(evt) {
     if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
         if ( xDiff > 0 ) {
             /* left swipe */ 
-            moveLeft();
+            pressLeft();
         } else {
             /* right swipe */
-            moveRight();
+            pressRight();
         }                       
     } else {
         if ( yDiff > 0 ) {
             /* up swipe */ 
-            moveUp();
+            pressUp();
         } else { 
             /* down swipe */
-            moveDown();
+            pressDown();
         }                                                                 
     }
     /* reset values */
     xDown = null;
     yDown = null;                                          
 };
+
+function pressLeft() {
+if (gameInProgress) {
+    moveLeft();
+}
+}
+function pressRight() {
+if (gameInProgress) {
+    moveRight();
+}
+}
+function pressUp() {
+if (menuActive != -1) {
+    menuUp();
+}
+}
+function pressDown() {
+if (menuActive != -1) {
+    menuDown();
+}
+}
+function pressSpace() {
+    if (gameInProgress == false && menuActive == -1) {
+        startGame();
+    } else if (menuActive != -1) {
+        menuAction();
+    } else {
+        fullDropBlock();
+    }
+}
+function pressEnter() {
+
+
+}
+
+
 function moveDown() {
 	
 }
@@ -107,13 +130,18 @@ function menuUp () {
     if (selectedMenuItem > 0) {
         selectedMenuItem--;
     }
+    playSoundEffect(3);
+
 }
 function menuDown() {
     if (selectedMenuItem < menus[menuActive].items.length-1) {
         selectedMenuItem++;
     }
+    playSoundEffect(2);
+
 }
 
 function menuAction() {
+        playSoundEffect(4);
     menus[menuActive].items[selectedMenuItem].listener();
 }

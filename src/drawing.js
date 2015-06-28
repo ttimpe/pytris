@@ -68,8 +68,6 @@
 		goFrame=goFrame+5;
 		} else {
 
-		goFrame = 0;
-		gameOver = false;
 		}
 	}
 

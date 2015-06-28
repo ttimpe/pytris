@@ -28,9 +28,11 @@
 		for (var i = 0; i < width; i++) {
 		blocks[i] = new Array();
 		}
+		clearInterval(blinkTimer);
 
 		gameInProgress = true;
 		gameOver = false;
+		goFrame = 0;
 		currentBlock = null;
 		dropBlockLoop = setInterval(dropBlock, 800);
 		menuActive = -1;
@@ -60,6 +62,8 @@
 	menuActive = 0;
 	menus = Array();
  	scaleFactor = backingScale(ctx);
+ 	blinkTimer = null;
+ 	introMusicTimer = null; 
  
 if (scaleFactor > 1) {
     c.width = c.width * scaleFactor;
@@ -75,14 +79,14 @@ if (scaleFactor > 1) {
 
 	}
 
-
 	function doGameOver() {
 
 		window.clearInterval(dropBlockLoop);
 		gameInProgress = false;
 		gameOver = true;
-		setInterval(invertBlink, 400);
+		blinkTimer = setInterval(invertBlink, 600);
 		stopMusic();
+		playSoundEffect(1);
 	}
 
 
