@@ -27,11 +27,8 @@
     	}
     	ctx.fill();
     	ctx.font = "bold "+(16*scaleFactor)+"px Courier New";
-    	if (block.color < 6) {
-    		ctx.fillStyle = '#000';
-    	} else {
-    		ctx.fillStyle = '#fff';
-    	}
+    	ctx.fillStyle = (block.color < 6) ? "#000" : "#fff";
+
     	if (block.isFacingDown) {
     		ctx.fillText(block.value, x + sizeX / 2 - ctx.measureText(block.value).width / 2, y + sizeY / 2);
     	} else {
@@ -48,48 +45,30 @@
 		}
 	}
 	function drawGameOver() {
-			var goString = "GAME";
-
 	if (goFrame < (c.width / 2 )) {
 		ctx.fillStyle = 'black';
 		ctx.fillRect(0,0,(sizeX*width), (sizeY*height));
 		ctx.fillStyle = "red";
 		ctx.strokeStyle = "white";
     	ctx.font = "bold "+(48*scaleFactor)+"px munroregular";
-		var dist = goFrame;
-		
-		log('game at: ' + dist);
-		
-		ctx.fillText('GAME', dist-(ctx.measureText('GAME').width+20), (height*sizeY) / 2);
+		log('Drawing GameOver Frame ' + goFrame);
+		ctx.fillText('GAME', goFrame-(ctx.measureText('GAME').width+20), (height*sizeY) / 2);
 		var len = (c.width/1.3) + ctx.measureText('OVER').width+20;
-		ctx.fillText('OVER', len - dist, (height*sizeY) / 2);
-
-		
+		ctx.fillText('OVER', len - goFrame, (height*sizeY) / 2);
 		goFrame=goFrame+5;
-		} else {
-
 		}
 	}
 
 	function drawMenu() {
 		ctx.fillStyle = 'black';
 		ctx.fillRect(0,0,(sizeX*width), (sizeY*height));
-
 		var theMenu = menus[menuActive];
-		
 		var menuY = c.width * 0.6;
 		ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
-
 		for (var i=0; i<theMenu.items.length; i++) {
 			var y =  menuY + (i*88);
 			log('Drawing MenuItem ' + i + ' at y: ' + y);
-			if (i == selectedMenuItem) {
-				ctx.fillStyle = "#06a4ff";
-			} else {
-				ctx.fillStyle = '#0036ff';
-
-			}
-
+			ctx.fillStyle = (i == selectedMenuItem) ? "#06a4ff" : "#0036ff";
 			ctx.fillText(theMenu.items[i].title, (c.width - ctx.measureText(theMenu.items[i].title).width) / 2,y);
 		}
 	}
@@ -98,15 +77,6 @@
 		ctx.fillStyle = "white";
 		var message = "Press [ENTER] or tap to play again"
     	ctx.font = "bold "+(20*scaleFactor)+"px munroregular";
-		var dist = goFrame;
-		if (blinky) {
-					ctx.fillStyle = "white";
-}
-else {
-			ctx.fillStyle = "black";
-
-}
+    	ctx.fillStyle = blinky ? "white" : "black";
 		ctx.fillText(message, c.width / 2 - ctx.measureText(message).width / 2, (height*sizeY) * 0.8);
-
-
 	}
