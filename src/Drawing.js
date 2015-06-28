@@ -68,23 +68,14 @@
 		for (var i=0; i<theMenu.items.length; i++) {
 			var y =  menuY + (i*44*scaleFactor);
 			log('Drawing MenuItem ' + i + ' at y: ' + y);
-<<<<<<< HEAD
 			ctx.fillStyle = (i == selectedMenuItem) ? "#06a4ff" : "#0036ff";
-=======
-			if (i == selectedMenuItem) {
-				ctx.fillStyle = "#06a4ff";
-			} else {
-				ctx.fillStyle = '#0036ff';
-
-			}
->>>>>>> 87922e8efda3f8e423da622c893839c7c0c07f1f
 			ctx.fillText(theMenu.items[i].title, (c.width - ctx.measureText(theMenu.items[i].title).width) / 2,y);
 		}
 	}
 
 	function drawPlayAgainMessage() {
 		ctx.fillStyle = "white";
-		var message = "Press [ENTER] or tap to play again"
+		var message = "Press [SPACE] or tap to play again"
     	ctx.font = "bold "+(20*scaleFactor)+"px munroregular";
     	ctx.fillStyle = blinky ? "white" : "black";
 		ctx.fillText(message, c.width / 2 - ctx.measureText(message).width / 2, (height*sizeY) * 0.8);

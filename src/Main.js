@@ -85,7 +85,7 @@ if (scaleFactor > 1) {
 		gameInProgress = false;
 		gameOver = true;
 		blinkTimer = setInterval(invertBlink, 600);
-		stopMusic();
+		stopAllMusic();
 		playSoundEffect(1);
 	}
 

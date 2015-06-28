@@ -14,6 +14,7 @@ function playFreq(freq,type,startTime, length) {
 	osc.type = type;
 	osc.frequency.value = freq;
 	osc.connect(leadGain);
+	oscs.push(osc);
 
 	log('scheduling at ' + ac.currentTime + startTime);
 	osc.start(ac.currentTime + startTime);
@@ -21,6 +22,7 @@ function playFreq(freq,type,startTime, length) {
 
 
 }
+var oscs = new Array();
 var bpm = 120;
 var notes = [
 				[49, 0, 0.15],
@@ -125,15 +127,10 @@ function playOneTime() {
 	}
 }
 function startMusic() {
-	window.clearInterval(introMusicTimer);
-	leadGain.gain.value = options.musicVolume;
+	stopAllMusic();
 	var fullLength = notes[notes.length-1][1] + notes[notes.length-1][2];
 	playOneTime();
 	musicTimer = setInterval(playOneTime, fullLength*1000);
-}
-function stopMusic() {
-	leadGain.gain.value = 0;
-	window.clearInterval(musicTimer);
 }
 
 function playIntroMusic() {
@@ -200,5 +197,12 @@ function playSoundEffect(i) {
 			osc.stop(ac.currentTime + 0.1);
 		break;
 	}
+}
+function stopAllMusic() {
+	for (var i = 0; i < oscs.length; i++) {
+		oscs[i].stop();
+	}
+	clearInterval(musicTimer);
+	clearInterval(introMusicTimer);
 }
 playIntroMusic();
