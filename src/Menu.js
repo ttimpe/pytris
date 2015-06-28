@@ -15,7 +15,8 @@ function showHighscore() {
 	menuActive = -1;
 }
 function showOptions() {
-
+	optionsActive = true;
+	menuActive = -1;
 }
 function showCredits() {
 

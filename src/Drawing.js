@@ -115,3 +115,29 @@
 		}
 		drawMessage("Press [ESC] to return");
 	}
+
+	function drawOptions() {
+		ctx.fillStyle = 'black';
+		ctx.fillRect(0,0,(sizeX*width), (sizeY*height));
+		ctx.fillStyle = 'yellow';
+		ctx.fillText('OPTIONS', (c.width - ctx.measureText('OPTIONS').width)/2, 100);
+		ctx.font = "bold "+(24*scaleFactor)+"px munroregular";
+
+			var i = 0;
+		ctx.fillStyle = 'white';
+		for (var key in options) {
+			ctx.fillText(key, c.width*0.2, (c.height*0.3) + (i*40));
+
+			switch (typeof options[key]){
+				case 'string':
+				break;
+				case 'boolean':
+				break;
+				case 'number':
+				break;
+			}
+			i++;
+		}
+		drawMessage("Press [ESC] to return");
+
+	}

@@ -94,7 +94,7 @@ if (menuActive != -1) {
 }
 }
 function pressSpace() {
-    if (gameInProgress == false && menuActive == -1 && highscoreActive == false) {
+    if (gameInProgress == false && menuActive == -1 && highscoreActive == false && optionsActive == false) {
         startGame();
     } else if (menuActive != -1) {
         menuAction();
@@ -119,6 +119,10 @@ function pressESC() {
         menuActive = 0;
         playSoundEffect(5);
 
+    } else if (optionsActive) {
+        optionsActive = false;
+        menuActive = 0;
+        playSoundEffect(5);
     }
 }
 

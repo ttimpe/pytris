@@ -22,7 +22,8 @@ var fps;
 			drawMenu();
 		} else if (highscoreActive) {
 			drawHighscore();
-
+		} else if (optionsActive) {
+			drawOptions();
 		}
 		drawFPS();
 
@@ -70,7 +71,7 @@ var fps;
  	introMusicTimer = null;
  	highscoreActive = false;
  	highscores = new Array();
-
+ 	optionsActive = false;
  
 if (scaleFactor > 1) {
     c.width = c.width * scaleFactor;
