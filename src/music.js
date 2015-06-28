@@ -15,7 +15,7 @@ function playFreq(freq,type,startTime, length) {
 	osc.frequency.value = freq;
 	osc.connect(leadGain);
 
-	console.log('scheduling at ' + ac.currentTime + startTime);
+	log('scheduling at ' + ac.currentTime + startTime);
 	osc.start(ac.currentTime + startTime);
 	osc.stop(ac.currentTime + startTime + length);
 

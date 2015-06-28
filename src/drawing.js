@@ -26,7 +26,7 @@
     		ctx.lineTo(x + sizeX / 2, y);
     	}
     	ctx.fill();
-    	ctx.font = "bold "+(16*scaleFactor)+"px Arial";
+    	ctx.font = "bold "+(16*scaleFactor)+"px Courier New";
     	if (block.color < 6) {
     		ctx.fillStyle = '#000';
     	} else {
@@ -58,7 +58,7 @@
     	ctx.font = "bold "+(48*scaleFactor)+"px munroregular";
 		var dist = goFrame;
 		
-		console.log('game at: ' + dist);
+		log('game at: ' + dist);
 		
 		ctx.fillText('GAME', dist-(ctx.measureText('GAME').width+20), (height*sizeY) / 2);
 		var len = (c.width/1.3) + ctx.measureText('OVER').width+20;
@@ -82,7 +82,7 @@
 
 		for (var i=0; i<theMenu.items.length; i++) {
 			var y =  menuY + (i*88);
-			console.log(y);
+			log('Drawing MenuItem ' + i + ' at y: ' + y);
 			if (i == selectedMenuItem) {
 				ctx.fillStyle = "#06a4ff";
 			} else {
