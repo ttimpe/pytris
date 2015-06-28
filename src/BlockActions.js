@@ -24,9 +24,9 @@ function spawnRandomBlock() {
 					doGameOver();
 				} else {
 				playSoundEffect(0);
-				console.log('Invalidating currentBlock');
+				log('Invalidating currentBlock');
 				currentBlock == null;
-				console.log('Spawning new block');
+				log('Spawning new block');
 				spawnRandomBlock();
 
 				return false;
@@ -38,7 +38,7 @@ function spawnRandomBlock() {
 
 	function fullDropBlock() {
 		while(dropBlock() == true) {
-			console.log('drop');
+			log('Dropping');
 		}
 		
 	}

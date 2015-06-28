@@ -13,7 +13,7 @@
   		}
   		delta = (new Date().getTime() - lastCalledTime)/1000;
   		lastCalledTime = Date.now();
-  		fps = Math.round(1/delta);
+  		fps = parseInt(1/delta);
   		ctx.fillStyle = 'red';
   				ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
 
