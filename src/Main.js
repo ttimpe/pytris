@@ -4,45 +4,52 @@ var fps;
 
 	function gameTick() {
 		// add switch on GameState
-
-		if (gameInProgress) {
-		ctx.fillStyle = '#fff';
-		ctx.fillRect(0, 0, c.width, c.height);
-		drawBoard();
-		for (var x = 0; x < blocks.length; x++) {
-			for (var y = 0; y < blocks[x].length; y++) {
-				if (blocks[x][y] != null) {
-				blocks[x][y].isFacingDown = true;
-				drawTriangle(x * sizeX, y * sizeY, blocks[x][y]);
-			}
-			}
-		}
-		
-		} else if (gameOver) {
-			drawGameOver(goFrame);
-		} else if (menuActive != -1) {
-			drawMenu();
-		} else if (highscoreActive) {
-			drawHighscore();
-		} else if (optionsActive) {
-			drawOptions();
+		switch (gameState) {
+			case GameState.IS_PLAYING:
+			ctx.fillStyle = '#fff';
+			ctx.fillRect(0, 0, c.width, c.height);
+			drawBoard();
+			drawBlocks();
+			break;
+			case GameState.IS_GAME_OVER:
+				drawGameOver(goFrame);
+			break;
+			case GameState.IN_MENU:
+				drawMenu();
+			break;
+			case GameState.IN_HIGHSCORE:
+				drawHighscore();
+			break;
+			case GameState.IN_OPTIONS:
+				drawOptions();
+			break;
 		}
 		drawFPS();
 
 	}
 	
+	function drawBlocks() {
+		for (var x = 0; x < blocks.length; x++) {
+				for (var y = 0; y < blocks[x].length; y++) {
+					if (blocks[x][y] != null) {
+						blocks[x][y].isFacingDown = true;
+						drawTriangle(x * sizeX, y * sizeY, blocks[x][y]);
+					}
+				}
+		}
+	}
+
 	function startGame() {
 		blocks = new Array();
 		for (var i = 0; i < width; i++) {
 		blocks[i] = new Array();
 		}
 		// set GameState
-		gameInProgress = true;
-		gameOver = false;
+		gameState = GameState.IS_PLAYING;
 		goFrame = 0;
 		currentBlock = null;
 		dropBlockLoop = setInterval(dropBlock, 800);
-		menuActive = -1;
+		menuActive = 0;
 		spawnRandomBlock();
 		document.addEventListener('touchstart', handleTouchStart, false);        
 		document.addEventListener('touchmove', handleTouchMove, false);
@@ -57,9 +64,7 @@ var fps;
 	height = 15;
 	borderWidth = 5;
 	color = 0;
-	gameState = 0;
-	gameInProgress = false;
-	gameOver = false;
+	gameState = GameState.IN_MENU;
 	goFrame = 0;
 	blinky = false;
 	xDown = null;                                                        
@@ -72,9 +77,7 @@ var fps;
  	scaleFactor = backingScale(ctx);
  	blinkTimer = setInterval(invertBlink, 600);
  	introMusicTimer = null;
- 	highscoreActive = false;
  	highscores = new Array();
- 	optionsActive = false;
 if (scaleFactor > 1) {
     c.width = c.width * scaleFactor;
     c.height = c.height * scaleFactor;
@@ -92,7 +95,6 @@ if (scaleFactor > 1) {
 	function stopGame() {
 		stopAllMusic();
 		window.clearInterval(dropBlockLoop);
-		gameInProgress = false;
 	}
 
 	var animation = function() {
@@ -100,8 +102,8 @@ if (scaleFactor > 1) {
 		gameTick();
 	}
 	function doGameOver() {
+		gameState = GameState.IS_GAME_OVER;
 		stopGame();
-		gameOver = true;
 		playSoundEffect(1);
 	}
 

@@ -74,41 +74,61 @@ function handleTouchMove(evt) {
 };
 
 function pressLeft() {
-if (gameInProgress) {
-    moveLeft();
-} else if (optionsActive) {
-    decreaseOption();
-}
+    switch (gameState) {
+        case GameState.IS_PLAYING:
+            moveLeft();
+            break;
+        case GameState.IN_OPTIONS:
+            decreaseOption();
+            break;
+    }
 }
 function pressRight() {
-if (gameInProgress) {
-    moveRight();
-} else if (optionsActive) {
-    increaseOption();
-}
+
+ switch (gameState) {
+        case GameState.IS_PLAYING:
+            moveRight();
+            break;
+        case GameState.IN_OPTIONS:
+            increaseOption();
+            break;
+    }
 }
 function pressUp() {
-if (menuActive != -1 | optionsActive) {
-    menuUp();
-}
+    switch (gameState) {
+        case GameState.IN_MENU:
+        menuUp();
+        break;
+        case GameState.IN_OPTIONS:
+        menuUp();
+        break;
+    }
 }
 function pressDown() {
-if (menuActive != -1 | optionsActive) {
-    menuDown();
-}
+    switch (gameState) {
+        case GameState.IN_MENU:
+        menuDown();
+        break;
+        case GameState.IN_OPTIONS:
+        menuDown();
+        break;
+    }
 }
 function pressSpace() {
-    if (gameInProgress == false && menuActive == -1 && highscoreActive == false && optionsActive == false) {
-        startGame();
-    } else if (menuActive != -1) {
-        menuAction();
-    } else if (optionsActive) {
-        toggleOption();
-    } else if (highscoreActive) {
-
-    }
-        else {
-        fullDropBlock();
+    switch (gameState) {
+        case GameState.IN_MENU:
+            menuAction();
+            break;
+        case GameState.IN_OPTIONS:
+            toggleOption();
+            break;
+        case GameState.IN_HIGHSCORE:
+            break;
+        case GameState.IS_PLAYING:
+            fullDropBlock();
+            break;
+        default:
+            startGame();
     }
 }
 function pressEnter() {
@@ -117,24 +137,28 @@ function pressEnter() {
 }
 
 function pressESC() {
-    if (highscoreActive) {
-        highscoreActive = false;
-        menuActive = 0;
-        playSoundEffect(5);
-    } else if (gameInProgress || gameOver) {
-        stopGame();
-        gameOver = false;
-        playIntroMusic();
-        menuActive = 0;
-        playSoundEffect(5);
-
-    } else if (optionsActive) {
-        optionsActive = false;
-        selectedMenuItem = 0;
-        menuActive = 0;
-        saveOptions();
-        playSoundEffect(5);
+    switch (gameState) {
+        case GameState.IN_HIGHSCORE:
+            gameState = GameState.IN_MENU;
+        break;
+        case GameState.IS_PLAYING:
+            stopGame();
+            gameState = GameState.IN_MENU;
+            playIntroMusic();
+            break;
+        case GameState.IS_GAME_OVER:
+            gameState = GameState.IN_MENU;
+            playIntroMusic();
+            selectedMenuItem = 0;
+            break;
+        case GameState.IN_OPTIONS:
+            gameState = GameState.IN_MENU;
+            saveOptions();
+            selectedMenuItem = 0;
+            break;
     }
+    playSoundEffect(5);
+  
 }
 
 function moveDown() {
@@ -166,11 +190,11 @@ function menuUp () {
 
 }
 function menuDown() {
-    if (optionsActive && selectedMenuItem < Object.keys(options).length-1) {
+    if (gameState == GameState.IN_OPTIONS && selectedMenuItem < Object.keys(options).length-1) {
         selectedMenuItem++;
     }
 
-    if (menuActive > -1 && selectedMenuItem < menus[menuActive].items.length-1) {
+    if (gameState == GameState.IN_MENU && selectedMenuItem < menus[menuActive].items.length-1) {
         selectedMenuItem++;
     }
     playSoundEffect(2);
@@ -178,9 +202,9 @@ function menuDown() {
 }
 
 function menuAction() {
-        playSoundEffect(4);
+    playSoundEffect(4);
     menus[menuActive].items[selectedMenuItem].listener();
-            selectedMenuItem = 0;
+    selectedMenuItem = 0;
 
 }
 
@@ -189,12 +213,10 @@ function toggleOption() {
     for (var key in options) {
         if (i == selectedMenuItem) {
             if (typeof options[key] == "boolean") {
-            options[key] = !options[key];
-            log('toggled ' + key);
-            playSoundEffect(4);
-
-        }
-
+                options[key] = !options[key];
+                log('toggled ' + key);
+                playSoundEffect(4);
+            }
         }
         i++;
     }
@@ -206,8 +228,8 @@ function increaseOption () {
     for (var key in options) {
         if (i == selectedMenuItem) {
             if (typeof options[key] == "number") {
-                if (options[key] < 0.3) {
-                    options[key] = options[key] + 0.05;
+                if (options[key] < 1) {
+                    options[key] = options[key] + 0.01;
                 } 
             log('increased ' + key);
             playSoundEffect(3);
@@ -229,9 +251,9 @@ function decreaseOption () {
     for (var key in options) {
         if (i == selectedMenuItem) {
             if (typeof options[key] == "number") {
-            if (options[key] > 0.05) {
+            if (options[key] > 0) {
 
-            options[key] = options[key] - 0.05;
+            options[key] = options[key] - 0.01;
             log('decreased ' + key);
             if (key == "musicVolume") {
                 leadGain.gain.value = options.musicVolume ;

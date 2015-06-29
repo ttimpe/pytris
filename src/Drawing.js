@@ -82,7 +82,7 @@
 
 		// then draw block
 		ctx.fillStyle = "white";
-		var sliderX = x + (number * 3 * width);
+		var sliderX = x + (number * width);
 		ctx.fillRect(sliderX,y - (height/2), sliderWidth,height);
 		
 
@@ -109,7 +109,7 @@
 	function drawMenu() {
 		ctx.fillStyle = 'black';
 		ctx.fillRect(0,0,(sizeX*width), (sizeY*height));
-		var theMenu = menus[menuActive];
+		var theMenu = menus[0];
 		var menuY = c.width * 0.6;
 		ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
 		for (var i=0; i<theMenu.items.length; i++) {

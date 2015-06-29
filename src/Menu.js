@@ -11,12 +11,11 @@ function MenuItem(title, listener) {
 // dummy funcs
 
 function showHighscore() {
-	highscoreActive = true;
-	menuActive = -1;
+	gameState = GameState.IN_HIGHSCORE;
 }
 function showOptions() {
-	optionsActive = true;
-	menuActive = -1;
+	gameState = GameState.IN_OPTIONS;
+
 }
 function showCredits() {
 
