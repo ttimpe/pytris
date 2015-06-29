@@ -1,0 +1,17 @@
+var translations = {
+	"START_GAME": "SPIEL STARTEN",
+	"HIGHSCORE":"BESTENLISTE",
+	"OPTIONS": "OPTIONEN",
+	"CREDITS": "INFO",
+	"ESC_BACK_MESSAGE": "Drucke [ESC] um zuruckzugehen",
+	"GAME_OVER": "SPIEL VORBEI",
+	"GAME_OVER_MESSAGE": "Drucke [SPACE] um nochmal zu spielen",
+	"MUSICVOLUME":"Musiklautstarke",
+	"FXVOLUME": "Effektlaustarke",
+	"DEBUG":"Entkafern",
+	"SHOWFPS":"FPS anzeigen",
+	"ADDITION": "Addition",
+	"SUBTRACTION":"Subtraktion",
+	"MULTIPLICATION":"Multiplikation",
+	"DIVISION": "Division",
+};

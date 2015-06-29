@@ -13,6 +13,7 @@ function playFreq(freq,type,startTime, length) {
 	var osc = ac.createOscillator();
 	osc.type = type;
 	osc.frequency.value = freq;
+	leadGain.gain.value = options.musicVolume;
 	osc.connect(leadGain);
 	oscs.push(osc);
 

@@ -72,7 +72,6 @@ var fps;
  	highscoreActive = false;
  	highscores = new Array();
  	optionsActive = false;
- 
 if (scaleFactor > 1) {
     c.width = c.width * scaleFactor;
     c.height = c.height * scaleFactor;
