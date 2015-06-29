@@ -144,8 +144,8 @@
 
 		ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
 		for (var i=0; i<highscores.length; i++) {
-
-			ctx.fillText(highscores[i].name, c.width*0.2, (c.height*0.3) + (i*40*scaleFactor));
+			ctx.fillText((i+1)+'.', c.width*0.15, (c.height*0.3) + (i*40*scaleFactor));
+			ctx.fillText(highscores[i].name, c.width*0.25, (c.height*0.3) + (i*40*scaleFactor));
 			ctx.fillText(highscores[i].score, c.width - (c.width*0.3), (c.height*0.3) + (i*40*scaleFactor));
 
 		}
