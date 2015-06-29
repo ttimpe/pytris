@@ -70,9 +70,9 @@
 	function drawSlider(x,y, width, height, number) {
 		// first draw slider line
 		log('drawing line from ' + x + ' to ' + (x+width));
-		var sliderWidth = 15;
+		var sliderWidth = 8 * scaleFactor;
 		ctx.strokeStyle = "white";
-		ctx.lineWidth = 5;
+		ctx.lineWidth = 2.5*scaleFactor;
 		ctx.beginPath();
       	ctx.moveTo(x, y);
       	ctx.lineTo(x+width, y);
@@ -171,7 +171,7 @@
 				drawBoolean(c.width - (c.width*0.3), (c.height*0.3) + (i*40*scaleFactor),options[key]);
 				break;
 				case 'number':
-				drawSlider(c.width - (c.width*0.3), (c.height*0.3) + (i*40*scaleFactor),100, 40, options[key]);
+				drawSlider(c.width - (c.width*0.3), (c.height*0.3) + (i*40*scaleFactor),100, 20*scaleFactor, options[key]);
 				break;
 			}
 			i++;
