@@ -190,8 +190,8 @@ function toggleOption() {
         if (i == selectedMenuItem) {
             if (typeof options[key] == "boolean") {
             options[key] = !options[key];
-            console.log('toggled ' + key);
-                    playSoundEffect(4);
+            log('toggled ' + key);
+            playSoundEffect(4);
 
         }
 
@@ -207,11 +207,11 @@ function increaseOption () {
         if (i == selectedMenuItem) {
             if (typeof options[key] == "number") {
                 if (options[key] < 0.3) {
-            options[key] = options[key] + 0.05;
-           } 
-            console.log('increased ' + key);
-                    playSoundEffect(3);
-                    if (key == "musicVolume") {
+                    options[key] = options[key] + 0.05;
+                } 
+            log('increased ' + key);
+            playSoundEffect(3);
+            if (key == "musicVolume") {
                 leadGain.gain.value = options.musicVolume;
             } else if (key ="fxVolume") {
                 fxGain.gain.value = options.fxVolume;
@@ -232,11 +232,10 @@ function decreaseOption () {
             if (options[key] > 0.05) {
 
             options[key] = options[key] - 0.05;
-            console.log('decreased ' + key);
+            log('decreased ' + key);
             if (key == "musicVolume") {
                 leadGain.gain.value = options.musicVolume ;
             } else if (key ="fxVolume") {
-                console.log('fx');
                 fxGain.gain.value = options.fxVolume;
 
             }

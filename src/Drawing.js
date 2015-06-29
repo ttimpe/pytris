@@ -14,7 +14,7 @@
   		delta = (new Date().getTime() - lastCalledTime)/1000;
   		lastCalledTime = Date.now();
   		fps = parseInt (1/delta);
-  		if (options.showFPS) {
+  		if (options.showFPS == true) {
   		ctx.fillStyle = 'red';
   		ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
 

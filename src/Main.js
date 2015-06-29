@@ -3,6 +3,8 @@ var lastCalledTime;
 var fps;
 
 	function gameTick() {
+		// add switch on GameState
+
 		if (gameInProgress) {
 		ctx.fillStyle = '#fff';
 		ctx.fillRect(0, 0, c.width, c.height);
@@ -34,7 +36,7 @@ var fps;
 		for (var i = 0; i < width; i++) {
 		blocks[i] = new Array();
 		}
-
+		// set GameState
 		gameInProgress = true;
 		gameOver = false;
 		goFrame = 0;
@@ -55,6 +57,7 @@ var fps;
 	height = 15;
 	borderWidth = 5;
 	color = 0;
+	gameState = 0;
 	gameInProgress = false;
 	gameOver = false;
 	goFrame = 0;
