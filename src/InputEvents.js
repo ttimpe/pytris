@@ -229,7 +229,7 @@ function increaseOption () {
         if (i == selectedMenuItem) {
             if (typeof options[key] == "number") {
                 if (options[key] < 1) {
-                    options[key] = options[key] + 0.01;
+                    options[key] = parseFloat((options[key] + 0.01).toFixed(2));
                 } 
             log('increased ' + key);
             playSoundEffect(3);
@@ -251,12 +251,11 @@ function decreaseOption () {
     for (var key in options) {
         if (i == selectedMenuItem) {
             if (typeof options[key] == "number") {
-            if (options[key] > 0) {
-
-            options[key] = options[key] - 0.01;
+            if (options[key] >= 0.01) {
+            options[key] = parseFloat((options[key] - 0.01).toFixed(2));
             log('decreased ' + key);
             if (key == "musicVolume") {
-                leadGain.gain.value = options.musicVolume ;
+                leadGain.gain.value = options.musicVolume;
             } else if (key ="fxVolume") {
                 fxGain.gain.value = options.fxVolume;
 
