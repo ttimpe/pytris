@@ -14,10 +14,12 @@
   		delta = (new Date().getTime() - lastCalledTime)/1000;
   		lastCalledTime = Date.now();
   		fps = parseInt (1/delta);
+  		if (options.showFPS) {
   		ctx.fillStyle = 'red';
   		ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
 
   		ctx.fillText(fps, (c.width*scaleFactor) - ctx.measureText(fps).width, 30);
+  	}
 	}
 	function drawRect(x, y, width, height) {
 		ctx.beginPath();
@@ -126,6 +128,8 @@
 	}
 
 	function drawMenuTitle(str) {
+		  		ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
+
 		ctx.fillStyle = 'yellow';
 		ctx.fillText(str, (c.width - ctx.measureText(str).width)/2, 100*(scaleFactor));
 	}

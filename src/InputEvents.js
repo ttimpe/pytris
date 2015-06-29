@@ -254,8 +254,9 @@ function decreaseOption () {
 c.addEventListener('mousemove', handleMouse);
 
 function handleMouse(e) {
+
     var relativeXPosition = (e.pageX - c.offsetLeft) * scaleFactor;
     var relativeYPosition = (e.pageY - c.offsetTop) * scaleFactor;
-    console.log('X: ' + relativeXPosition + ' Y: ' + relativeYPosition);
+    log('X: ' + relativeXPosition + ' Y: ' + relativeYPosition);
 
 }
