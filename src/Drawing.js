@@ -118,7 +118,9 @@
 			ctx.fillStyle = (i == selectedMenuItem) ? "#06a4ff" : "#0036ff";
 			ctx.fillText(translations[theMenu.items[i].title], (c.width - ctx.measureText(translations[theMenu.items[i].title]).width) / 2,y);
 		}
+		drawMessage('build ' + VERSION);
 	}
+
 
 	function drawMessage(message) {
 		ctx.fillStyle = "white";
