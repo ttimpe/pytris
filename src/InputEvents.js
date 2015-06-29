@@ -84,12 +84,12 @@ if (gameInProgress) {
 }
 }
 function pressUp() {
-if (menuActive != -1) {
+if (menuActive != -1 || optionsActive) {
     menuUp();
 }
 }
 function pressDown() {
-if (menuActive != -1) {
+if (menuActive != -1 || optionsActive) {
     menuDown();
 }
 }
@@ -121,6 +121,7 @@ function pressESC() {
 
     } else if (optionsActive) {
         optionsActive = false;
+        selectedMenuItem = 0;
         menuActive = 0;
         playSoundEffect(5);
     }
@@ -155,6 +156,9 @@ function menuUp () {
 
 }
 function menuDown() {
+    if (optionsActive && selectedMenuItem < options.length-1) {
+        selectedMenuItem++;
+    }
     if (selectedMenuItem < menus[menuActive].items.length-1) {
         selectedMenuItem++;
     }
@@ -165,4 +169,6 @@ function menuDown() {
 function menuAction() {
         playSoundEffect(4);
     menus[menuActive].items[selectedMenuItem].listener();
+            selectedMenuItem = 0;
+
 }

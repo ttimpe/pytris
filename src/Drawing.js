@@ -49,6 +49,25 @@
     		ctx.fillText(block.value, x + sizeX / 2 - ctx.measureText(block.value).width / 2, y + parseInt(sizeY * 0.8));
     	}
 	}
+	function drawCheckbox(x, y, width, height, radius, checked) {
+		ctx.strokeStyle = 'white';
+		ctx.beginPath();
+  		ctx.moveTo(x + radius, y);
+  		ctx.lineTo(x + width - radius, y);
+  		ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  		ctx.lineTo(x + width, y + height - radius);
+  		ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  		ctx.lineTo(x + radius, y + height);
+  		ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  		ctx.lineTo(x, y + radius);
+  		ctx.quadraticCurveTo(x, y, x + radius, y);
+  		ctx.closePath();
+		ctx.stroke();
+		if (checked) {
+			ctx.fillText('×', x + 3, y + (height)-5);
+		}
+
+	}
 	function drawBoard() {
 		ctx.strokeStyle = '#000';
 		for (var x = 0; x < width; x++) {
@@ -123,15 +142,23 @@
 		ctx.fillText('OPTIONS', (c.width - ctx.measureText('OPTIONS').width)/2, 100);
 		ctx.font = "bold "+(24*scaleFactor)+"px munroregular";
 
-			var i = 0;
+		var i = 0;
 		ctx.fillStyle = 'white';
 		for (var key in options) {
+			if (selectedMenuItem == i) {
+				ctx.fillStyle = "yellow";
+			} else {
+				ctx.fillStyle = "white"
+			}
 			ctx.fillText(key, c.width*0.2, (c.height*0.3) + (i*40));
+				ctx.fillStyle = "white"
 
 			switch (typeof options[key]){
 				case 'string':
 				break;
 				case 'boolean':
+				console.log('drawing checkbox');
+				drawCheckbox(c.width - (c.width*0.3),((c.height*0.3) + (i*40)-18), 24, 24, 5, true); 
 				break;
 				case 'number':
 				break;
