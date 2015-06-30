@@ -1,4 +1,3 @@
-
 function HighscoreEntry(name, score) {
 	this.score = score;
 	this.name = name;

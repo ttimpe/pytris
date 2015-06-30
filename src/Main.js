@@ -8,36 +8,26 @@ var fps;
 			case GameState.IS_PLAYING:
 			ctx.fillStyle = '#fff';
 			ctx.fillRect(0, 0, c.width, c.height);
-			drawBoard();
-			drawBlocks();
+			Drawing.drawBoard();
+			Drawing.drawBlocks();
 			break;
 			case GameState.IS_GAME_OVER:
-				drawGameOver(goFrame);
+				Drawing.drawGameOver(goFrame);
 			break;
 			case GameState.IN_MENU:
-				drawMenu();
+				Drawing.drawMenu();
 			break;
 			case GameState.IN_HIGHSCORE:
-				drawHighscore();
+				Drawing.drawHighscore();
 			break;
 			case GameState.IN_OPTIONS:
-				drawOptions();
+				Drawing.drawOptions();
 			break;
 		}
-		drawFPS();
+		Drawing.drawFPS();
 
 	}
 	
-	function drawBlocks() {
-		for (var x = 0; x < blocks.length; x++) {
-				for (var y = 0; y < blocks[x].length; y++) {
-					if (blocks[x][y] != null) {
-						blocks[x][y].isFacingDown = true;
-						drawTriangle(x * sizeX, y * sizeY, blocks[x][y]);
-					}
-				}
-		}
-	}
 
 	function startGame() {
 		blocks = new Array();
@@ -53,7 +43,7 @@ var fps;
 		spawnRandomBlock();
 		document.addEventListener('touchstart', handleTouchStart, false);        
 		document.addEventListener('touchmove', handleTouchMove, false);
-		startMusic();
+		Music.startMusic();
 	}
 	function initGame() {
 	c = document.getElementById('gameCanvas');
@@ -93,7 +83,7 @@ if (scaleFactor > 1) {
 	}
 
 	function stopGame() {
-		stopAllMusic();
+		Music.stopAllMusic();
 		window.clearInterval(dropBlockLoop);
 	}
 
@@ -104,7 +94,7 @@ if (scaleFactor > 1) {
 	function doGameOver() {
 		gameState = GameState.IS_GAME_OVER;
 		stopGame();
-		playSoundEffect(1);
+		Music.playSoundEffect(1);
 	}
 
 

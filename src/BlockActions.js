@@ -23,7 +23,7 @@ function spawnRandomBlock() {
 				if (currentBlock.y == 0) {
 					doGameOver();
 				} else {
-				playSoundEffect(0);
+				Music.playSoundEffect(0);
 				log('Invalidating currentBlock');
 				currentBlock == null;
 				log('Spawning new block');

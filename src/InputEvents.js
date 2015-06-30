@@ -144,11 +144,11 @@ function pressESC() {
         case GameState.IS_PLAYING:
             stopGame();
             gameState = GameState.IN_MENU;
-            playIntroMusic();
+            Music.playIntroMusic();
             break;
         case GameState.IS_GAME_OVER:
             gameState = GameState.IN_MENU;
-            playIntroMusic();
+            Music.playIntroMusic();
             selectedMenuItem = 0;
             break;
         case GameState.IN_OPTIONS:
@@ -157,7 +157,7 @@ function pressESC() {
             selectedMenuItem = 0;
             break;
     }
-    playSoundEffect(5);
+    Music.playSoundEffect(5);
   
 }
 
@@ -186,7 +186,7 @@ function menuUp () {
     if (selectedMenuItem > 0) {
         selectedMenuItem--;
     }
-    playSoundEffect(3);
+    Music.playSoundEffect(3);
 
 }
 function menuDown() {
@@ -197,12 +197,12 @@ function menuDown() {
     if (gameState == GameState.IN_MENU && selectedMenuItem < menus[menuActive].items.length-1) {
         selectedMenuItem++;
     }
-    playSoundEffect(2);
+    Music.playSoundEffect(2);
 
 }
 
 function menuAction() {
-    playSoundEffect(4);
+    Music.playSoundEffect(4);
     menus[menuActive].items[selectedMenuItem].listener();
     selectedMenuItem = 0;
 
@@ -215,7 +215,7 @@ function toggleOption() {
             if (typeof options[key] == "boolean") {
                 options[key] = !options[key];
                 log('toggled ' + key);
-                playSoundEffect(4);
+                Music.playSoundEffect(4);
             }
         }
         i++;
@@ -232,11 +232,11 @@ function increaseOption () {
                     options[key] = parseFloat((options[key] + 0.01).toFixed(2));
                 } 
             log('increased ' + key);
-            playSoundEffect(3);
+            Music.playSoundEffect(3);
             if (key == "musicVolume") {
-                leadGain.gain.value = options.musicVolume;
+                Music.leadGain.gain.value = options.musicVolume;
             } else if (key ="fxVolume") {
-                fxGain.gain.value = options.fxVolume;
+                Music.fxGain.gain.value = options.fxVolume;
 
             }
 
@@ -255,13 +255,13 @@ function decreaseOption () {
             options[key] = parseFloat((options[key] - 0.01).toFixed(2));
             log('decreased ' + key);
             if (key == "musicVolume") {
-                leadGain.gain.value = options.musicVolume;
+                Music.leadGain.gain.value = options.musicVolume;
             } else if (key ="fxVolume") {
-                fxGain.gain.value = options.fxVolume;
+                Music.fxGain.gain.value = options.fxVolume;
 
             }
           }  
-            playSoundEffect(2);
+            Music.playSoundEffect(2);
 
         }
 
