@@ -75,6 +75,8 @@ if (scaleFactor > 1) {
     sizeY=sizeX*0.8;
     // update the context for the new canvas scale
     ctx = c.getContext("2d");
+
+    
 }
 
 	//loop = setInterval(gameTick, 16);

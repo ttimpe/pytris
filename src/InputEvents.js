@@ -2,7 +2,8 @@
 	
 document.addEventListener('keydown', handleKeyPress);
 
-
+document.addEventListener('touchstart', handleTouchStart);
+document.addEventListener('touchmove', handleTouchMove);
 
 function handleKeyPress(e) {
 switch (e.keyCode) {
