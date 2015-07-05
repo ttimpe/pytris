@@ -131,6 +131,7 @@ function pressDown() {
     }
 }
 function pressSpace() {
+    alert('space');
     switch (gameState) {
         case GameState.IN_MENU:
             menuAction();
