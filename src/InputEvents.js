@@ -4,7 +4,7 @@ document.addEventListener('keydown', handleKeyPress);
 
 document.addEventListener('touchstart', handleTouchStart);
 document.addEventListener('touchmove', handleTouchMove);
-document.addEventListener('click', pressSpace);
+document.addEventListener('mouseup', pressSpace);
 
 document.addEventListener('gesturechange', handleGestureChange);
 document.addEventListener('gestureend', handleGestureEnd);
@@ -17,6 +17,7 @@ function handleGestureEnd(ev) {
 if (scale < 1.0) {
     // zoom out, esc
     pressESC();
+    ev.preventDefault();
 }
 }
 function handleKeyPress(e) {
