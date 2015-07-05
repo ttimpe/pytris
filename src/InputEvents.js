@@ -54,7 +54,6 @@ switch (e.keyCode) {
 function handleTouchStart(evt) {                                         
     xDown = evt.touches[0].clientX;                                      
     yDown = evt.touches[0].clientY; 
-    evt.preventDefault();                                     
 };                                                
 function handleTouchMove(evt) {
     if ( ! xDown || ! yDown ) {
@@ -131,7 +130,6 @@ function pressDown() {
     }
 }
 function pressSpace() {
-    alert('space');
     switch (gameState) {
         case GameState.IN_MENU:
             menuAction();
