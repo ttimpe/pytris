@@ -215,7 +215,11 @@ Music.playSoundEffect = function(i) {
 };
 Music.stopAllMusic = function() {
 	for (var i = 0; i < Music.oscs.length; i++) {
+		try {
 		Music.oscs[i].stop();
+	} catch (ex) {
+		
+	}
 	}
 	clearInterval(Music.musicTimer);
 	clearInterval(Music.introMusicTimer);

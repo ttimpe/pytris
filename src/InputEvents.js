@@ -4,7 +4,21 @@ document.addEventListener('keydown', handleKeyPress);
 
 document.addEventListener('touchstart', handleTouchStart);
 document.addEventListener('touchmove', handleTouchMove);
+document.addEventListener('click', pressSpace);
 
+document.addEventListener('gesturechange', handleGestureChange);
+document.addEventListener('gestureend', handleGestureEnd);
+
+var scale;
+function handleGestureChange(ev) {
+scale = ev.scale;
+}
+function handleGestureEnd(ev) {
+if (scale < 1.0) {
+    // zoom out, esc
+    pressESC();
+}
+}
 function handleKeyPress(e) {
 switch (e.keyCode) {
 			// left
