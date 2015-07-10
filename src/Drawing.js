@@ -37,24 +37,33 @@ Drawing.drawBlocks = function() {
 		for (var x = 0; x < blocks.length; x++) {
 				for (var y = 0; y < blocks[x].length; y++) {
 					if (blocks[x][y] != null) {
-						blocks[x][y].isFacingDown = true;
 						Drawing.drawTriangle(x * sizeX, y * sizeY, blocks[x][y]);
 					}
 				}
 		}
 	};
-
+Drawing.drawOperandBlocks = function() {
+		for (var x = 0; x < operands.length; x++) {
+				for (var y = 0; y < operands[x].length; y++) {
+					if (operands[x][y] != null) {
+						Drawing.drawTriangle(x * sizeX, y * sizeY, operands[x][y]);
+					}
+				}
+		}
+	};
 Drawing.drawTriangle = function (x, y, block) {
 	ctx.fillStyle = 'hsl(' + (block.color * 36) + ', 100%, 50%)';
 	ctx.beginPath();
 	if (block.isFacingDown) {
 		ctx.moveTo(x, y);
 		ctx.lineTo(x + sizeX, y);
-			ctx.lineTo(x + sizeX / 2, y + sizeY);
+		ctx.lineTo(x + sizeX / 2, y + sizeY);
 	} else {
-		ctx.moveTo(x, y + sizeY);
-		ctx.lineTo(x + sizeX, y + sizeY);
-		ctx.lineTo(x + sizeX / 2, y);
+		ctx.fillStyle = '#000';
+
+		ctx.moveTo(x - (sizeX/2), y + sizeY);
+		ctx.lineTo(x + (sizeX/2), y + sizeY);
+		ctx.lineTo(x, y);
 	}
 	ctx.fill();
 	ctx.font = "bold "+(16*scaleFactor)+"px Courier New";
@@ -63,7 +72,9 @@ Drawing.drawTriangle = function (x, y, block) {
 	if (block.isFacingDown) {
 		ctx.fillText(block.value, x + sizeX / 2 - ctx.measureText(block.value).width / 2, y + sizeY / 2);
 	} else {
-		ctx.fillText(block.value, x + sizeX / 2 - ctx.measureText(block.value).width / 2, y + parseInt(sizeY * 0.8));
+		if (block.value != null) {
+		ctx.fillText(Object.keys(Operands)[block.value], x  - ctx.measureText(block.value).width / 2, y + parseInt(sizeY * 0.8));
+		}
 	}
 };
 

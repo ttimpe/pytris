@@ -10,6 +10,7 @@ var fps;
 			ctx.fillRect(0, 0, c.width, c.height);
 			Drawing.drawBoard();
 			Drawing.drawBlocks();
+			Drawing.drawOperandBlocks();
 			break;
 			case GameState.IS_GAME_OVER:
 				Drawing.drawGameOver(goFrame);
@@ -31,9 +32,15 @@ var fps;
 
 	function startGame() {
 		blocks = new Array();
+		operands = new Array();
+
 		for (var i = 0; i < width; i++) {
 		blocks[i] = new Array();
 		}
+	for (var i = 0; i <= width; i++) {
+		operands[i] = new Array();
+		}
+
 		// set GameState
 		gameState = GameState.IS_PLAYING;
 		goFrame = 0;
@@ -76,7 +83,7 @@ if (scaleFactor > 1) {
     // update the context for the new canvas scale
     ctx = c.getContext("2d");
 
-    
+    				
 }
 
 	//loop = setInterval(gameTick, 16);
