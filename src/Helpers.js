@@ -1,9 +1,11 @@
 // Helpers.js
-function invertBlink() {
+function Helpers() {};
+// Simply inverts boolean
+Helpers.invertBlink = function() {
 		blinky = !blinky;
 }
 // Support for retina screens
-function backingScale(context) {
+Helpers.backingScale = function(context) {
     if ('devicePixelRatio' in window) {
         if (window.devicePixelRatio > 1) {
             return window.devicePixelRatio;
@@ -11,16 +13,16 @@ function backingScale(context) {
     }
     return 1;
 }
-function random(min, max) {
+Helpers.random = function(min, max) {
 		return parseInt(Math.random() * (max - min) + min);
 }
 // Logs to console if enabled in options using format "[CLASS] Error Message"
-function log(str) {
+Helpers.log = function(str) {
 	if (options.debug) {
 		 var stack = new Error().stack;
          var lineAccessingLogger = stack.split("\n")[2];
          var fileName = lineAccessingLogger.substring(lineAccessingLogger.lastIndexOf("/") + 1, lineAccessingLogger.lastIndexOf('.'));
-		console.log('['+ fileName+ '] ' + str);
+		  console.log('['+ fileName+ '] ' + str);
 
 	}
 }

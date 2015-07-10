@@ -48,9 +48,11 @@ var fps;
 		dropBlockLoop = setInterval(BlockActions.dropBlock, 800);
 		menuActive = 0;
 		BlockActions.spawnRandomBlock();
-		document.addEventListener('touchstart', handleTouchStart, false);        
-		document.addEventListener('touchmove', handleTouchMove, false);
 		Music.startMusic();
+	}
+	function animation() {
+		animationFrame = requestAnimationFrame(animation);
+		gameTick();
 	}
 	function initGame() {
 	c = document.getElementById('gameCanvas');
@@ -71,8 +73,8 @@ var fps;
 	selectedMenuItem = 0;
 	menuActive = 0;
 	menus = Array();
- 	scaleFactor = backingScale(ctx);
- 	blinkTimer = setInterval(invertBlink, 600);
+ 	scaleFactor = Helpers.backingScale(ctx);
+ 	blinkTimer = setInterval(Helpers.invertBlink, 600);
  	introMusicTimer = null;
  	highscores = new Array();
 if (scaleFactor > 1) {
@@ -96,10 +98,7 @@ if (scaleFactor > 1) {
 		window.clearInterval(dropBlockLoop);
 	}
 
-	var animation = function() {
-		animationFrame = requestAnimationFrame(animation);
-		gameTick();
-	}
+	
 	function doGameOver() {
 		gameState = GameState.IS_GAME_OVER;
 		stopGame();

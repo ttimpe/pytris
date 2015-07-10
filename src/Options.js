@@ -12,10 +12,10 @@ options = {
 };
 
 if (localStorage.getItem('options') != null) {
-	log('Loading options from localStorage');
+	Helpers.log('Loading options from localStorage');
 	options = JSON.parse(localStorage.getItem('options'));
 }
 function saveOptions() {
-	log('Saving options to localStorage');
-localStorage.setItem('options', JSON.stringify(options));
+	Helpers.log('Saving options to localStorage');
+	localStorage.setItem('options', JSON.stringify(options));
 }

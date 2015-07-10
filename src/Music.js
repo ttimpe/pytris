@@ -112,7 +112,7 @@ Music.playFreq = function(freq,type,startTime, length) {
 	osc.connect(Music.leadGain);
 	Music.oscs.push(osc);
 
-	log('scheduling at ' + Music.ac.currentTime + startTime);
+	Helpers.log('scheduling at ' + Music.ac.currentTime + startTime);
 	osc.start(Music.ac.currentTime + startTime);
 	osc.stop(Music.ac.currentTime + startTime + length);
 

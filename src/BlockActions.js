@@ -1,10 +1,10 @@
 // BlockActions.js
 function BlockActions() {};
 BlockActions.spawnRandomBlock = function() {
-	var x = random(0, width);
+	var x = Helpers.random(0, width);
 	currentBlock = new Block();
-	currentBlock.color = random(1, 10);
-	currentBlock.value = random(1, 10);
+	currentBlock.color = Helpers.random(1, 10);
+	currentBlock.value = Helpers.random(1, 10);
 	currentBlock.x = x;
 	currentBlock.y = 0;
 	currentBlock.isFacingDown = true;
@@ -22,9 +22,9 @@ BlockActions.dropBlock = function () {
 				doGameOver();
 			} else {
 			Music.playSoundEffect(0);
-			log('Invalidating currentBlock');
+			Helpers.log('Invalidating currentBlock');
 			currentBlock == null;
-			log('Spawning new block');
+			Helpers.log('Spawning new block');
 			BlockActions.spawnRandomBlock();
 
 			return false;
@@ -34,7 +34,7 @@ BlockActions.dropBlock = function () {
 }
 BlockActions.fullDropBlock = function() {
 	while(BlockActions.dropBlock() == true) {
-		log('Dropping');
+		Helpers.log('Dropping');
 	}
 		
 }
@@ -48,7 +48,7 @@ BlockActions.spawnOperandBlock = function(x,y, operand) {
 BlockActions.spawnOperandRow = function(row) {
 	BlockActions.spawnOperandBlock(0, row, null);
 	for (var i =1; i<width-1; i++) {
-		BlockActions.spawnOperandBlock(i, row, random(1,5));
+		BlockActions.spawnOperandBlock(i, row, Helpers.random(1,5));
 	}
 	BlockActions.spawnOperandBlock(width-1, row, 0);
 	BlockActions.spawnOperandBlock(width, row, null);
@@ -62,8 +62,8 @@ BlockActions.evalRow = function(row) {
 		}
 		resultString += blocks[l][row].value;
 	}
-	log('RESULT STRING: ' + resultString);
-	log('SHOULD BE ' + parseInt(eval(resultString)));
+	Helpers.log('RESULT STRING: ' + resultString);
+	Helpers.log('SHOULD BE ' + parseInt(eval(resultString)));
 	if (parseInt(eval(resultString)) == blocks[width-1][row]) {
 		return true;
 	}

@@ -1,141 +1,55 @@
 // input handlers
-	
-document.addEventListener('keydown', handleKeyPress);
-
-document.addEventListener('touchstart', handleTouchStart);
-document.addEventListener('touchmove', handleTouchMove);
-document.addEventListener('mouseup', pressSpace);
-
-document.addEventListener('gesturechange', handleGestureChange);
-document.addEventListener('gestureend', handleGestureEnd);
+function InputEvents() {};
 
 var scale;
-function handleGestureChange(ev) {
-scale = ev.scale;
-}
-function handleGestureEnd(ev) {
-if (scale < 1.0) {
-    // zoom out, esc
-    pressESC();
-    ev.preventDefault();
-}
-}
-function handleKeyPress(e) {
-switch (e.keyCode) {
-			// left
-			case 37:
-				pressLeft();
-			break;
-            case 38:
-                pressUp();
-                break;
-			case 32:
-				pressSpace();
-			break;
-			// right
-			case 39:
-				pressRight();
-			break;
-            case 40:
-                pressDown();
-            case 13:
-                pressEnter();
-            break;
-            case 27:
-                pressESC();
-                break;
-			default:
 
-			break;
-
-	}
-	
-}
-function handleTouchStart(evt) {                                         
-    xDown = evt.touches[0].clientX;                                      
-    yDown = evt.touches[0].clientY; 
-};                                                
-function handleTouchMove(evt) {
-    if ( ! xDown || ! yDown ) {
-        return;
-    }
-
-    var xUp = evt.touches[0].clientX;                                    
-    var yUp = evt.touches[0].clientY;
-
-    var xDiff = xDown - xUp;
-    var yDiff = yDown - yUp;
-
-    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-        if ( xDiff > 0 ) {
-            /* left swipe */ 
-            pressLeft();
-        } else {
-            /* right swipe */
-            pressRight();
-        }                       
-    } else {
-        if ( yDiff > 0 ) {
-            /* up swipe */ 
-            pressUp();
-        } else { 
-            /* down swipe */
-            pressDown();
-        }                                                                 
-    }
-    /* reset values */
-    xDown = null;
-    yDown = null;                                          
-};
-
-function pressLeft() {
+InputEvents.pressLeft = function() {
     switch (gameState) {
         case GameState.IS_PLAYING:
-            moveLeft();
+            InputEvents.moveLeft();
             break;
         case GameState.IN_OPTIONS:
-            decreaseOption();
+            InputEvents.decreaseOption();
             break;
     }
 }
-function pressRight() {
-
+InputEvents.pressRight = function() {
  switch (gameState) {
         case GameState.IS_PLAYING:
-            moveRight();
+            InputEvents.moveRight();
             break;
         case GameState.IN_OPTIONS:
-            increaseOption();
+            InputEvents.increaseOption();
             break;
     }
 }
-function pressUp() {
+InputEvents.pressUp = function() {
     switch (gameState) {
         case GameState.IN_MENU:
-        menuUp();
+            InputEvents.menuUp();
         break;
         case GameState.IN_OPTIONS:
-        menuUp();
+            InputEvents.menuUp();
         break;
     }
 }
-function pressDown() {
+InputEvents.pressDown = function() {
     switch (gameState) {
         case GameState.IN_MENU:
-        menuDown();
+            InputEvents.menuDown();
         break;
         case GameState.IN_OPTIONS:
-        menuDown();
+            InputEvents.menuDown();
         break;
     }
 }
-function pressSpace() {
+InputEvents.pressSpace = function() {
     switch (gameState) {
         case GameState.IN_MENU:
-            menuAction();
+            InputEvents.menuAction();
             break;
         case GameState.IN_OPTIONS:
-            toggleOption();
+            InputEvents.toggleOption();
             break;
         case GameState.IN_HIGHSCORE:
             break;
@@ -146,12 +60,12 @@ function pressSpace() {
             startGame();
     }
 }
-function pressEnter() {
+InputEvents.pressEnter = function() {
 
 
 }
 
-function pressESC() {
+InputEvents.pressESC = function() {
     switch (gameState) {
         case GameState.IN_HIGHSCORE:
             gameState = GameState.IN_MENU;
@@ -176,35 +90,35 @@ function pressESC() {
   
 }
 
-function moveDown() {
+InputEvents.moveDown = function() {
 	
 }
-function moveUp() {
+InputEvents.moveUp = function() {
 	
 }
-function moveLeft() {
+InputEvents.moveLeft = function() {
 if (currentBlock.x>0 && blocks[currentBlock.x-1][currentBlock.y] == null) {
 blocks[currentBlock.x][currentBlock.y] = null;
 blocks[currentBlock.x-1][currentBlock.y] = currentBlock;
 currentBlock.x--;
 }
 }
-function moveRight() {
-if (currentBlock.x<width-1 && blocks[currentBlock.x+1][currentBlock.y] == null) {
-blocks[currentBlock.x][currentBlock.y] = null;
-blocks[currentBlock.x+1][currentBlock.y] = currentBlock;
-currentBlock.x++;
-}
+InputEvents.moveRight = function() {
+    if (currentBlock.x<width-1 && blocks[currentBlock.x+1][currentBlock.y] == null) {
+        blocks[currentBlock.x][currentBlock.y] = null;
+        blocks[currentBlock.x+1][currentBlock.y] = currentBlock;
+        currentBlock.x++;
+    }
 }
 
-function menuUp () {
+InputEvents.menuUp = function() {
     if (selectedMenuItem > 0) {
         selectedMenuItem--;
     }
     Music.playSoundEffect(3);
 
 }
-function menuDown() {
+InputEvents.menuDown = function() {
     if (gameState == GameState.IN_OPTIONS && selectedMenuItem < Object.keys(options).length-1) {
         selectedMenuItem++;
     }
@@ -213,23 +127,22 @@ function menuDown() {
         selectedMenuItem++;
     }
     Music.playSoundEffect(2);
-
 }
 
-function menuAction() {
+InputEvents.menuAction = function() {
     Music.playSoundEffect(4);
     menus[menuActive].items[selectedMenuItem].listener();
     selectedMenuItem = 0;
 
 }
 
-function toggleOption() {
+InputEvents.toggleOption = function() {
     var i=0;
     for (var key in options) {
         if (i == selectedMenuItem) {
             if (typeof options[key] == "boolean") {
                 options[key] = !options[key];
-                log('toggled ' + key);
+                Helpers.log('toggled ' + key);
                 Music.playSoundEffect(4);
             }
         }
@@ -238,7 +151,7 @@ function toggleOption() {
 
 }
 
-function increaseOption () {
+InputEvents.increaseOption = function () {
     var i=0;
     for (var key in options) {
         if (i == selectedMenuItem) {
@@ -246,7 +159,7 @@ function increaseOption () {
                 if (options[key] < 1) {
                     options[key] = parseFloat((options[key] + 0.01).toFixed(2));
                 } 
-            log('increased ' + key);
+            Helpers.log('increased ' + key);
             Music.playSoundEffect(3);
             if (key == "musicVolume") {
                 Music.leadGain.gain.value = options.musicVolume;
@@ -261,14 +174,14 @@ function increaseOption () {
         i++;
     }
 }
-function decreaseOption () {
+InputEvents.decreaseOption = function() {
     var i=0;
     for (var key in options) {
         if (i == selectedMenuItem) {
             if (typeof options[key] == "number") {
             if (options[key] >= 0.01) {
             options[key] = parseFloat((options[key] - 0.01).toFixed(2));
-            log('decreased ' + key);
+            Helpers.log('decreased ' + key);
             if (key == "musicVolume") {
                 Music.leadGain.gain.value = options.musicVolume;
             } else if (key ="fxVolume") {
@@ -284,14 +197,8 @@ function decreaseOption () {
         i++;
     }
 }
+// Init all handlers
+KeyboardHandler();
+TouchHandler();
+MouseHandler();
 
-
-c.addEventListener('mousemove', handleMouse);
-
-function handleMouse(e) {
-
-    var relativeXPosition = (e.pageX - c.offsetLeft) * scaleFactor;
-    var relativeYPosition = (e.pageY - c.offsetTop) * scaleFactor;
-    log('X: ' + relativeXPosition + ' Y: ' + relativeYPosition);
-
-}

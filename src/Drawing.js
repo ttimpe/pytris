@@ -99,7 +99,7 @@ Drawing.drawBoolean = function (x,y,bool) {
 // Draws slider for options
 Drawing.drawSlider = function (x,y, width, height, number) {
 	// first draw slider line
-	log('drawing line from ' + x + ' to ' + (x+width));
+	Helpers.log('drawing line from ' + x + ' to ' + (x+width));
 	var sliderWidth = 8 * scaleFactor;
 	ctx.strokeStyle = "white";
 	ctx.lineWidth = 2.5*scaleFactor;
@@ -124,7 +124,7 @@ if (goFrame < (c.width / 2 )) {
 	ctx.strokeStyle = "white";
 	ctx.font = "bold "+(48*scaleFactor)+"px munroregular";
 	var words = translations['GAME_OVER'].split(' ');
-	log('Drawing GameOver Frame ' + goFrame);
+	Helpers.log('Drawing GameOver Frame ' + goFrame);
 	ctx.fillText(words[0], goFrame-(ctx.measureText(words[0]).width+20), (height*sizeY) / 2);
 	var len = (c.width/1.3) + ctx.measureText(words[1]).width+20;
 	ctx.fillText(words[1], len - goFrame, (height*sizeY) / 2);
@@ -143,7 +143,7 @@ Drawing.drawMenu = function () {
 	ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
 	for (var i=0; i<theMenu.items.length; i++) {
 		var y =  menuY + (i*44*scaleFactor);
-		log('Drawing MenuItem ' + i + ' at y: ' + y);
+		Helpers.log('Drawing MenuItem ' + i + ' at y: ' + y);
 		ctx.fillStyle = (i == selectedMenuItem) ? "#06a4ff" : "#0036ff";
 		ctx.fillText(translations[theMenu.items[i].title], (c.width - ctx.measureText(translations[theMenu.items[i].title]).width) / 2,y);
 	}
