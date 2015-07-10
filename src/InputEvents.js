@@ -140,7 +140,7 @@ function pressSpace() {
         case GameState.IN_HIGHSCORE:
             break;
         case GameState.IS_PLAYING:
-            fullDropBlock();
+            BlockActions.fullDropBlock();
             break;
         default:
             startGame();

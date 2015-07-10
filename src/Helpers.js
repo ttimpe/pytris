@@ -1,7 +1,8 @@
-// util.js
+// Helpers.js
 function invertBlink() {
 		blinky = !blinky;
 }
+// Support for retina screens
 function backingScale(context) {
     if ('devicePixelRatio' in window) {
         if (window.devicePixelRatio > 1) {
@@ -13,6 +14,7 @@ function backingScale(context) {
 function random(min, max) {
 		return parseInt(Math.random() * (max - min) + min);
 }
+// Logs to console if enabled in options using format "[CLASS] Error Message"
 function log(str) {
 	if (options.debug) {
 		 var stack = new Error().stack;

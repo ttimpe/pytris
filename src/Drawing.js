@@ -7,7 +7,7 @@ Drawing.drawLine = function (x1, y1, x2, y2) {
   	ctx.lineTo(x2, y2);
   	ctx.stroke();
 };
-
+// Draws current FPS if enabled in options
 Drawing.drawFPS = function () {
 	if(!lastCalledTime) {
  		lastCalledTime = Date.now();
@@ -51,6 +51,7 @@ Drawing.drawOperandBlocks = function() {
 				}
 		}
 	};
+// Draws Triangle - either for block or operand
 Drawing.drawTriangle = function (x, y, block) {
 	ctx.fillStyle = 'hsl(' + (block.color * 36) + ', 100%, 50%)';
 	ctx.beginPath();
@@ -77,7 +78,7 @@ Drawing.drawTriangle = function (x, y, block) {
 		}
 	}
 };
-
+// Draws Board Lines
 Drawing.drawBoard = function () {
 	ctx.strokeStyle = '#000';
 	for (var x = 0; x < width; x++) {
@@ -95,7 +96,7 @@ Drawing.drawBoolean = function (x,y,bool) {
 	}
 	ctx.fillText(label,x,y);
 };
-
+// Draws slider for options
 Drawing.drawSlider = function (x,y, width, height, number) {
 	// first draw slider line
 	log('drawing line from ' + x + ' to ' + (x+width));
@@ -114,7 +115,7 @@ Drawing.drawSlider = function (x,y, width, height, number) {
 	
 
 };
-
+// Draws one frame for "GAME OVER"  screen
 Drawing.drawGameOver = function () {
 if (goFrame < (c.width / 2 )) {
 	ctx.fillStyle = 'black';
@@ -133,7 +134,7 @@ if (goFrame < (c.width / 2 )) {
 	Drawing.drawMessage(translations.GAME_OVER_MESSAGE);
 
 };
-
+// Draws Main Menu
 Drawing.drawMenu = function () {
 	ctx.fillStyle = 'black';
 	ctx.fillRect(0,0,(sizeX*width), (sizeY*height));
@@ -149,20 +150,21 @@ Drawing.drawMenu = function () {
 	Drawing.drawMessage('build ' + VERSION);
 };
 
-
+// Draws blinking message in lower third of screen
 Drawing.drawMessage = function (message)  {
 	ctx.fillStyle = "white";
 	ctx.font = "bold "+(20*scaleFactor)+"px munroregular";
 	ctx.fillStyle = blinky ? "white" : "black";
 	ctx.fillText(message, c.width / 2 - ctx.measureText(message).width / 2, (height*sizeY) * 0.8);
 };
-
+// Draws title for menu
 Drawing.drawMenuTitle = function (str) {
 	ctx.font = "bold "+(36*scaleFactor)+"px munroregular";
 	ctx.fillStyle = 'yellow';
 	ctx.fillText(str, (c.width - ctx.measureText(str).width)/2, 100*(scaleFactor));
 };
 
+// Draws frame for highscore list
 Drawing.drawHighscore = function () {
 	ctx.fillStyle = 'black';
 	ctx.fillRect(0,0,(sizeX*width), (sizeY*height));
@@ -179,13 +181,13 @@ Drawing.drawHighscore = function () {
 	Drawing.drawMessage(translations.ESC_BACK_MESSAGE);
 };
 
+// Draws frame for options list
+
 Drawing.drawOptions = function () {
 	ctx.fillStyle = 'black';
 	ctx.fillRect(0,0,(sizeX*width), (sizeY*height));
 	Drawing.drawMenuTitle(translations.OPTIONS);
-
 	ctx.font = "bold "+(24*scaleFactor)+"px munroregular";
-
 	var i = 0;
 	ctx.fillStyle = 'white';
 	for (var key in options) {
@@ -196,7 +198,7 @@ Drawing.drawOptions = function () {
 		}
 		ctx.fillText(translations[key.toUpperCase()], c.width*0.2, (c.height*0.3) + (i*40*scaleFactor));
 		ctx.fillStyle = "white"
-
+		// TODO (?): STRINGS
 		switch (typeof options[key]){
 			case 'string':
 			break;
