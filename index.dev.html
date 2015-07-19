@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1, user-scalable=no">
+	<style>
+	@font-face {
+    font-family: 'munroregular';
+    src: url('fonts/munro-webfont.eot');
+    src: url('fonts/munro-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/munro-webfont.woff') format('woff'),
+         url('fonts/munro-webfont.ttf') format('truetype'),
+         url('fonts/munro-webfont.svg#munroregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+* { margin: 0; padding: 0}
+html, body {position: fixed;}
+		body {
+			background-color: gray;
+			width: 100%;
+			height: 100%;
+			font-family: 'munroregular';
+		}
+		#gameCanvas {
+			border: 3px solid black;
+			position: absolute;
+			width: 400px;
+			height: 600px;
+			left:50%;
+			top:50%;
+			margin-left: -200px;
+			margin-top: -300px;
+		}
+	</style>
+</head>
+<body>
+<canvas id="gameCanvas" width="400" height="600"></canvas>
+<script src="src/version.js"></script>
+<!-- Fallback Translation -->
+<script src="lang/en.js"></script>
+<script src="src/Translation.js"></script>
+<script src="src/GameState.js"></script>
+<script src="src/Operands.js"></script>
+<script src="src/Helpers.js"></script>
+<script src="src/Options.js"></script>
+<script src="src/Main.js"></script>
+<script src="src/Menu.js"></script>
+<script src="src/Block.js"></script>
+<script src="src/BlockActions.js"></script>
+<script src="src/Drawing.js"></script>
+<script src="src/InputHandlers/KeyboardHandler.js"></script>
+<script src="src/InputHandlers/MouseHandler.js"></script>
+<script src="src/InputHandlers/TouchHandler.js"></script>
+<script src="src/InputHandlers/GamepadHandler.js"></script>
+<script src="src/InputEvents.js"></script>
+<script src="src/Music.js"></script>
+<script src="src/HighscoreEntry.js"></script>
+
+
+
+</body>
+</html>
